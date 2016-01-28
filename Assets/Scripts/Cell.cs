@@ -4,72 +4,72 @@ using System.Collections;
 public class Cell : MonoBehaviour {
 
 //	[HideInInspector]
-	public Figure figureOnCell;
+//	public Figure figureOnCell;
+	public bool moveHighlightOn;
+	public TileTypes tileType; 
 
-	private TileTypes _tileType; 
 	private SpriteRenderer _spriteRenderer;	
 	private Sprite _cellType;
-	private bool _moveHighlight;
+	private FigureTypes _figureType;
 
-	void Awake() {
+	void Start() {
 		_spriteRenderer = GetComponent<SpriteRenderer> ();
 		TileTypeDefine ();
 		GameManager.gm.board.AddCell (this);
+
 	}
 
 	void Update () {
-		CheckChild ();
+//		CheckChild ();
 	}
 
-	public void PossibleMoves (Figure figure) {
-		switch (figure.figureType) {
-		case FigureTypes.Pawn:
-			HighlightCell (GameManager.gm.board.GetCell(transform.position.x + 1f, transform.position.y));
-			HighlightCell (GameManager.gm.board.GetCell(transform.position.x - 1f, transform.position.y));
-			HighlightCell (GameManager.gm.board.GetCell(transform.position.x, transform.position.y + 1f));
-			HighlightCell (GameManager.gm.board.GetCell(transform.position.x, transform.position.y - 1f));
-			break;
+	void OnMouseDown() {
+		if (GameManager.gm.figureForMoveHandler != null && moveHighlightOn) {
+			GameManager.gm.figureForMoveHandler.parentCell.UnHighlightPossibleMoves();
+			GameManager.gm.figureForMoveHandler.parentCell = this;
+			GameManager.gm.figureForMoveHandler.transform.position = this.transform.position;
+			GameManager.gm.figureForMoveHandler = null;
 		}
 	}
 
-	void HighlightCell (Cell cell) {
-		cell.GetComponent<SpriteRenderer> ().color = Color.green;
-		cell._moveHighlight = true;
-	}
-
-	void OnMouseEnter() {
-		Debug.Log ("I am over " + _tileType);
-		_spriteRenderer.color = Color.green;
-
-	}
-
 	void OnMouseOver() {
+//		Debug.Log ("I am over " + tileType);
 		_spriteRenderer.color = Color.green;
 	}
 
 	void OnMouseExit() {
-		if (!_moveHighlight) _spriteRenderer.color = Color.white;
+		if (!moveHighlightOn) _spriteRenderer.color = Color.white;
 	}
 
 	void TileTypeDefine () {
 		switch (_spriteRenderer.sprite.name) 
 		{
 		case "White":
-			_tileType = TileTypes.White;
+			tileType = TileTypes.White;
 			break;
 		case "black":
-			_tileType = TileTypes.Black;
+			tileType = TileTypes.Black;
 			break;
 		case "Wall":
-			_tileType = TileTypes.Wall;
+			tileType = TileTypes.Wall;
+			break;
+		}
+	}
+	
+	void UnHighlightPossibleMoves () {
+		switch (_figureType) {
+		case FigureTypes.Pawn:
+			PawnUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
 			break;
 		}
 	}
 
 	void CheckChild () {
 		foreach (Transform child in transform) {
-			if (child.gameObject.layer == 8) {
-				figureOnCell = child.gameObject.GetComponent<Figure> ();
+			switch (child.gameObject.name) {
+			case "Pawn":
+				_figureType = FigureTypes.Pawn;
+				break;
 			}
 		}
 	}

@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager gm;
 	public BoardManager board;
+	public Figure figureForMoveHandler;
 
 	void Awake () {
 		if (gm == null)

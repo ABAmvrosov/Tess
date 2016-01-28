@@ -17,9 +17,20 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public Cell GetCell (float x, float y) {
-		return cellArray [ToIndices (x), ToIndices (y)];
+		if (isCoordinateOk (x, y)) {
+			return null; 
+		} else {
+			return cellArray [ToIndices (x), ToIndices (y)];
+		}
 	}
+
 	int ToIndices(float coordinate) {
 		return (int)coordinate + dimension / 2;
+	}
+
+	public static bool isCoordinateOk (float x, float y) {
+		int highBorder = GameManager.gm.board.dimension/2;
+		int lowerBorder = highBorder * -1;
+		return (x > highBorder | x < lowerBorder | y > highBorder | y < lowerBorder);
 	}
 }

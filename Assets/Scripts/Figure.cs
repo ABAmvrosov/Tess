@@ -3,15 +3,15 @@ using System.Collections;
 
 public class Figure : MonoBehaviour {
 
-	[HideInInspector]
 	public FigureTypes figureType;
+	public bool isActive = false;
+	public Cell parentCell;
 
 	SideType _side;
-	Cell _parentCell;
 
 	void Awake () {
 		FigureTypeDefine ();
-		_parentCell = transform.parent.gameObject.GetComponent<Cell> ();;
+		parentCell = transform.parent.gameObject.GetComponent<Cell> ();;
 		if (this.tag == "Dark") {
 			_side = SideType.DarkSide;
 		} else {
@@ -19,9 +19,9 @@ public class Figure : MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown () {
-		_parentCell.PossibleMoves(this);
-	}
+//	void OnMouseDown () {
+//		_parentCell.PossibleMoves(this);
+//	}
 
 	void FigureTypeDefine () {
 		switch (this.name) {
@@ -45,4 +45,5 @@ public class Figure : MonoBehaviour {
 			break;
 		}
 	}
+
 }

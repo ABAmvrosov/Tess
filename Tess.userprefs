@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Figure.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PawnUtil.cs">
     <Files>
-      <File FileName="Assets\Scripts\PawnUtil.cs" Line="33" Column="38" />
-      <File FileName="Assets\Scripts\EventManager.cs" Line="14" Column="40" />
-      <File FileName="Assets\Scripts\Cell.cs" Line="41" Column="31" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="7" Column="28" />
+      <File FileName="Assets\Scripts\PawnUtil.cs" Line="17" Column="3" />
+      <File FileName="Assets\Scripts\EventManager.cs" Line="9" Column="1" />
+      <File FileName="Assets\Scripts\Cell.cs" Line="30" Column="8" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="31" Column="1" />
       <File FileName="Assets\Scripts\Figure.cs" Line="35" Column="26" />
       <File FileName="Assets\Scripts\BoardManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enums.cs" Line="1" Column="1" />

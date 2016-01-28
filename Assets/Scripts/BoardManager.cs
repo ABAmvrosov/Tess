@@ -17,11 +17,11 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public Cell GetCell (float x, float y) {
-		if (isCoordinateOk (x, y)) {
-			return null; 
-		} else {
+//		if (isCoordinateOk (x, y)) {
 			return cellArray [ToIndices (x), ToIndices (y)];
-		}
+//		} else {
+//			return null;
+//		}
 	}
 
 	int ToIndices(float coordinate) {
@@ -31,6 +31,6 @@ public class BoardManager : MonoBehaviour {
 	public static bool isCoordinateOk (float x, float y) {
 		int highBorder = GameManager.gm.board.dimension/2;
 		int lowerBorder = highBorder * -1;
-		return (x > highBorder | x < lowerBorder | y > highBorder | y < lowerBorder);
+		return !(x >= highBorder | x <= lowerBorder | y >= highBorder | y <= lowerBorder);
 	}
 }

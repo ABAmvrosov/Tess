@@ -1,44 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// This class represent a single Cell on the board
 public class Cell : MonoBehaviour {
 
-//	[HideInInspector]
-//	public Figure figureOnCell;
-	public bool moveHighlightOn;
-	public TileTypes tileType; 
+	// public variables
+	public bool moveHighLightOn;  // used for define possible cells to move figure
+	public TileTypes tileType;    // Define a type of cell
+	public Figure figure;		  // Stores figure on it, if not then null
 
-	private SpriteRenderer _spriteRenderer;	
-	private Sprite _cellType;
-	private FigureTypes _figureType;
+	//private variables
+	private SpriteRenderer _spriteRenderer;	// used for highligh possible moves
+	private Sprite _cellType;				// used for define tileType variable
 
 	void Start() {
+
 		_spriteRenderer = GetComponent<SpriteRenderer> ();
 		TileTypeDefine ();
-		GameManager.gm.board.AddCell (this);
+		CheckChild ();
 
+		// add cell to board 2d array
+		GameManager.gm.board.AddCell (this);
 	}
 
 	void Update () {
-//		CheckChild ();
-	}
-
-	void OnMouseDown() {
-		if (GameManager.gm.figureForMoveHandler != null && moveHighlightOn) {
-			GameManager.gm.figureForMoveHandler.parentCell.UnHighlightPossibleMoves();
-			GameManager.gm.figureForMoveHandler.parentCell = this;
-			GameManager.gm.figureForMoveHandler.transform.position = this.transform.position;
-			GameManager.gm.figureForMoveHandler = null;
-		}
 	}
 
 	void OnMouseOver() {
-//		Debug.Log ("I am over " + tileType);
+		if (!moveHighLightOn)
 		_spriteRenderer.color = Color.green;
 	}
 
 	void OnMouseExit() {
-		if (!moveHighlightOn) _spriteRenderer.color = Color.white;
+		if (!moveHighLightOn) _spriteRenderer.color = Color.white;
 	}
 
 	void TileTypeDefine () {
@@ -56,8 +50,37 @@ public class Cell : MonoBehaviour {
 		}
 	}
 	
-	void UnHighlightPossibleMoves () {
-		switch (_figureType) {
+	// called for move figure
+	void OnMouseDown() {
+		if (GameManager.gm.figureTaken && moveHighLightOn) {
+			if (figure) {
+				Figure pickedFigure = GameManager.gm.figureForMoveHandler;
+				GameManager.gm.DropFigure ();
+				PawnUtil.Attack (figure);
+				MoveFigure (pickedFigure);				
+				EventManager.OnMove();
+			} else {
+				Figure pickedFigure = GameManager.gm.figureForMoveHandler;
+				GameManager.gm.DropFigure ();
+				MoveFigure (pickedFigure);
+				EventManager.OnMove();
+			}
+		}
+	}	
+
+	void MoveFigure (Figure f) {
+		f.parentCell.UnHighlight();
+		Cell oldCell = f.parentCell;
+		f.parentCell = this;
+		oldCell.figure = null;
+		f.transform.position = this.transform.position;
+		figure = f;
+		_spriteRenderer.color = Color.white;
+		f = null;
+	}
+
+	void UnHighlight () {
+		switch (figure.figureType) {
 		case FigureTypes.Pawn:
 			PawnUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
 			break;
@@ -65,12 +88,16 @@ public class Cell : MonoBehaviour {
 	}
 
 	void CheckChild () {
+		if (transform.childCount == 0)
+			return;
 		foreach (Transform child in transform) {
-			switch (child.gameObject.name) {
-			case "Pawn":
-				_figureType = FigureTypes.Pawn;
-				break;
-			}
+
+			figure = child.gameObject.GetComponent<Figure>();
+
 		}
+	}
+
+	void DropFigure () {
+		figure = null; 
 	}
 }

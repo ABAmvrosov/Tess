@@ -1,28 +1,29 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PawnUtil.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cell.cs">
     <Files>
-      <File FileName="Assets\Scripts\PawnUtil.cs" Line="17" Column="3" />
-      <File FileName="Assets\Scripts\EventManager.cs" Line="9" Column="1" />
-      <File FileName="Assets\Scripts\Cell.cs" Line="30" Column="8" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="31" Column="1" />
-      <File FileName="Assets\Scripts\Figure.cs" Line="35" Column="26" />
-      <File FileName="Assets\Scripts\BoardManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enums.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="16" Column="20" />
+      <File FileName="Assets\Scripts\Cell.cs" Line="79" Column="30" />
+      <File FileName="Assets\Scripts\GroundCard.cs" Line="20" Column="30" />
+      <File FileName="Assets\Scripts\InvertUtil.cs" Line="142" Column="69" />
+      <File FileName="Assets\Scripts\PasteUtil.cs" Line="54" Column="3" />
+      <File FileName="Assets\Scripts\XORUtil.cs" Line="55" Column="3" />
+      <File FileName="Assets\Scripts\EventManager.cs" Line="16" Column="34" />
     </Files>
     <Pads>
-      <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Scripts" expanded="True">
+              <Node name="Cell.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
-    <Watch file="Assets\Scripts\Cell.cs" line="17" offsetX="405" offsetY="272" expression="GameManager.gm" liveUpdate="False" />
-  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

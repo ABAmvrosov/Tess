@@ -16,14 +16,17 @@ public class Figure : MonoBehaviour {
 		} else {
 			side = SideType.LightSide;
 		}
-		EventManager.OnMove += ColliderActivate;
-		EventManager.OnPick += ColliderDeactivate;
+		EventManager.OnFigureMove += ColliderActivate;
+		EventManager.CancelFigurePicked  += ColliderActivate;
+		EventManager.OnFigurePick += ColliderDeactivate;
+		EventManager.OnCardDone += ColliderDeactivate;
 	}
 
 	void Update () {
 		if (isActive && Input.GetButtonDown("Cancel")) {
 			PawnUtil.UnHighlightPossibleMoves (parentCell.transform.position.x, parentCell.transform.position.y);
 			GameManager.gm.DropFigure ();
+			EventManager.CancelFigurePicked();
 		}
 	}
 
@@ -31,8 +34,15 @@ public class Figure : MonoBehaviour {
 		if (!GameManager.gm.figureTaken) {
 			GameManager.gm.TakeFigure (this);
 			isActive = true;
-			PawnUtil.PossibleMoves (this);
-			EventManager.OnPick();
+			switch (figureType) {
+			case FigureTypes.Pawn:				
+				PawnUtil.PossibleMoves (this);
+				break;
+			case FigureTypes.Knight:
+				KnightUtil.PossibleMoves (this);
+				break;
+			}
+			EventManager.OnFigurePick();
 		}
 	}
 

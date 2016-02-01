@@ -27,12 +27,19 @@ public class Cell : MonoBehaviour {
 	}
 
 	void OnMouseOver() {
-		if (!moveHighLightOn)
-		_spriteRenderer.color = Color.green;
+		if (GameManager.gm.groundCard) {
+			GameManager.gm.groundCard.Highlight (this);
+		} 
+		if (!GameManager.gm.groundCard && !moveHighLightOn)
+			_spriteRenderer.color = Color.green;
+
 	}
 
 	void OnMouseExit() {
-		if (!moveHighLightOn) _spriteRenderer.color = Color.white;
+		if (GameManager.gm.groundCard) {
+			GameManager.gm.groundCard.UnHighlight (this);
+		} else if (!moveHighLightOn) 
+			_spriteRenderer.color = Color.white;
 	}
 
 	void TileTypeDefine () {
@@ -58,13 +65,18 @@ public class Cell : MonoBehaviour {
 				GameManager.gm.DropFigure ();
 				PawnUtil.Attack (figure);
 				MoveFigure (pickedFigure);				
-				EventManager.OnMove();
+				EventManager.OnFigureMove();
 			} else {
 				Figure pickedFigure = GameManager.gm.figureForMoveHandler;
 				GameManager.gm.DropFigure ();
 				MoveFigure (pickedFigure);
-				EventManager.OnMove();
+				EventManager.OnFigureMove();
 			}
+		}
+		if (GameManager.gm.groundCard) {
+			GameManager.gm.groundCard.GroundEffect (this);
+			GameManager.gm.groundCard = null;
+			EventManager.OnCardDone();
 		}
 	}	
 
@@ -83,6 +95,9 @@ public class Cell : MonoBehaviour {
 		switch (figure.figureType) {
 		case FigureTypes.Pawn:
 			PawnUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
+			break;
+		case FigureTypes.Knight:
+			KnightUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
 			break;
 		}
 	}

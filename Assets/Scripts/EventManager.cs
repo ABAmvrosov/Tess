@@ -5,10 +5,14 @@ using System;
 public static class EventManager {
 
 
-	public static Action OnClicked;
+	public static Action OnCardChoose;
 
-	public static Action OnMove;
+	public static Action OnFigureMove;
 
-	public static Action OnPick;
+	public static Action OnFigurePick;
+
+	public static Action CancelFigurePicked;
+
+	public static Action OnCardDone;
 
 }

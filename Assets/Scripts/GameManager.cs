@@ -14,9 +14,12 @@ public class GameManager : MonoBehaviour {
 	public Sprite white;
 	public Sprite black;
 	public Sprite wall;
+	public SideType activeSide;
 
-	string _playerOneTurn = "Player 1 turn";
-	string _playerTwoTurn = "Player 2 turn";
+	[HideInInspector]
+	public Player playerOne;	
+	[HideInInspector]
+	public Player playerTwo;
 
 	void Awake () {
 		if (gm == null)
@@ -25,6 +28,12 @@ public class GameManager : MonoBehaviour {
 			board = GameObject.FindGameObjectWithTag ("Board").GetComponent<BoardManager> ();
 		//		if (events == null)
 		//			events = GameObject.FindGameObjectWithTag ("EventManager").GetComponent<EventManager> ();
+
+		activeSide = SideType.LightSide;
+		playerOne = new Player ();
+		playerOne.side = SideType.LightSide;
+		playerTwo = new Player ();
+		playerTwo.side = SideType.DarkSide;
 
 		UITurn.text = "Player 1 turn";
 		EventManager.OnCardDone += TurnSwitch;
@@ -47,10 +56,12 @@ public class GameManager : MonoBehaviour {
 	void TurnSwitch () {
 		switch (UITurn.text) {
 		case "Player 1 turn":
-			UITurn.text = _playerTwoTurn;
+			UITurn.text = "Player 2 turn";
+			activeSide = SideType.DarkSide;
 			break;
 		case "Player 2 turn":
-			UITurn.text = _playerOneTurn;
+			UITurn.text = "Player 1 turn";
+			activeSide = SideType.LightSide;
 			break;
 		}
 	}

@@ -50,15 +50,16 @@
      <Compile Include="Assets\Scripts\Enums.cs" />
      <Compile Include="Assets\Scripts\EventManager.cs" />
      <Compile Include="Assets\Scripts\Figure.cs" />
+     <Compile Include="Assets\Scripts\FiguresUtils\KnightUtil.cs" />
+     <Compile Include="Assets\Scripts\FiguresUtils\PawnUtil.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GenerateBoard.cs" />
      <Compile Include="Assets\Scripts\GroundCard.cs" />
-     <Compile Include="Assets\Scripts\InvertUtil.cs" />
-     <Compile Include="Assets\Scripts\KnightUtil.cs" />
+     <Compile Include="Assets\Scripts\GroundCardUtils\InvertUtil.cs" />
+     <Compile Include="Assets\Scripts\GroundCardUtils\PasteUtil.cs" />
+     <Compile Include="Assets\Scripts\GroundCardUtils\XORUtil.cs" />
      <Compile Include="Assets\Scripts\MoveCard.cs" />
-     <Compile Include="Assets\Scripts\PasteUtil.cs" />
-     <Compile Include="Assets\Scripts\PawnUtil.cs" />
-     <Compile Include="Assets\Scripts\XORUtil.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

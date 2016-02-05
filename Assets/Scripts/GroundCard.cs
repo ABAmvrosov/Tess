@@ -6,12 +6,21 @@ public class GroundCard : MonoBehaviour {
 	public GroundCardFigure groundCardFigure;
 	public GroundCardType groundCardType;
 
+	bool _isTaken;
+
 	void Start () {
-		EventManager.OnCardDone += DestroyCard;
+
+	}
+
+	void Update () {
+		if (_isTaken && !GameManager.gm.groundCard) {
+			Destroy(gameObject);
+		}
 	}
 
 	void OnMouseDown () {
 		GameManager.gm.groundCard = this;
+		_isTaken = true;
 		GetComponent<SpriteRenderer> ().color = Color.green;
 	}
 

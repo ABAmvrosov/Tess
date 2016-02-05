@@ -11,19 +11,19 @@ public static class InvertUtil {
 			Cube (cell.transform.position.x, cell.transform.position.y, ActionType.Highlight);
 			break;
 		case GroundCardFigure.J:
-			J ();
+			J (cell.transform.position.x, cell.transform.position.y, ActionType.Highlight);
 			break;
 		case GroundCardFigure.L:
-			L ();
+			L (cell.transform.position.x, cell.transform.position.y, ActionType.Highlight);
 			break;
 		case GroundCardFigure.S:
-			S ();
+			S (cell.transform.position.x, cell.transform.position.y, ActionType.Highlight);
 			break;
 		case GroundCardFigure.T:
-			T ();
+			T (cell.transform.position.x, cell.transform.position.y, ActionType.Highlight);
 			break;
 		case GroundCardFigure.Z:
-			Z ();
+			Z (cell.transform.position.x, cell.transform.position.y, ActionType.Highlight);
 			break;
 		}
 	}
@@ -34,19 +34,19 @@ public static class InvertUtil {
 			Cube (cell.transform.position.x, cell.transform.position.y, ActionType.UnHighlight);
 			break;
 			case GroundCardFigure.J:
-			J ();
+			J (cell.transform.position.x, cell.transform.position.y, ActionType.UnHighlight);
 			break;
 			case GroundCardFigure.L:
-			L ();
+			L (cell.transform.position.x, cell.transform.position.y, ActionType.UnHighlight);
 			break;
 			case GroundCardFigure.S:
-			S ();
+			S (cell.transform.position.x, cell.transform.position.y, ActionType.UnHighlight);
 			break;
 			case GroundCardFigure.T:
-			T ();
+			T (cell.transform.position.x, cell.transform.position.y, ActionType.UnHighlight);
 			break;
 			case GroundCardFigure.Z:
-			Z ();
+			Z (cell.transform.position.x, cell.transform.position.y, ActionType.UnHighlight);
 			break;
 		}	
 	}
@@ -57,19 +57,19 @@ public static class InvertUtil {
 			Cube (cell.transform.position.x, cell.transform.position.y, ActionType.Invert);
 			break;
 		case GroundCardFigure.J:
-			J ();
+			J (cell.transform.position.x, cell.transform.position.y, ActionType.Invert);
 			break;
 		case GroundCardFigure.L:
-			L ();
+			L (cell.transform.position.x, cell.transform.position.y, ActionType.Invert);
 			break;
 		case GroundCardFigure.S:
-			S ();
+			S (cell.transform.position.x, cell.transform.position.y, ActionType.Invert);
 			break;
 		case GroundCardFigure.T:
-			T ();
+			T (cell.transform.position.x, cell.transform.position.y, ActionType.Invert);
 			break;
 		case GroundCardFigure.Z:
-			Z ();
+			Z (cell.transform.position.x, cell.transform.position.y, ActionType.Invert);
 			break;
 		}	
 	}
@@ -98,24 +98,124 @@ public static class InvertUtil {
 		}
 	}
 
-	static void J () {
-
+	static void J (float x, float y, ActionType actionType) {
+		switch (actionType) {
+		case ActionType.Highlight:
+			HighlightCell (x, y);
+			HighlightCell (x, y - 1f);
+			HighlightCell (x, y - 2f);
+			HighlightCell (x - 1f, y - 2f);
+			break;
+		case ActionType.UnHighlight:
+			UnHighlightCell (x, y);
+			UnHighlightCell (x, y - 1f);
+			UnHighlightCell (x, y - 2f);
+			UnHighlightCell (x - 1f, y - 2f);
+			break;
+		case ActionType.Invert:
+			Debug.Log("Invert J Calling");
+			Invert (x, y);
+			Invert (x, y - 1f);
+			Invert (x, y - 2f);
+			Invert (x - 1f, y - 2f);
+			break;
+		}
 	}
 	
-	static void L () {
-		
+	static void L (float x, float y, ActionType actionType) {
+		switch (actionType) {
+		case ActionType.Highlight:
+			HighlightCell (x, y);
+			HighlightCell (x + 1f, y);
+			HighlightCell (x + 1f, y - 1f);
+			HighlightCell (x, y - 1f);
+			break;
+		case ActionType.UnHighlight:
+			UnHighlightCell (x, y);
+			UnHighlightCell (x + 1f, y);
+			UnHighlightCell (x + 1f, y - 1f);
+			UnHighlightCell (x, y - 1f);
+			break;
+		case ActionType.Invert:
+			Debug.Log("Invert L Calling");
+			Invert (x, y);
+			Invert (x + 1f, y);
+			Invert (x + 1f, y - 1f);
+			Invert (x, y - 1f);
+			break;
+		}
 	}
 	
-	static void S () {
-		
+	static void S (float x, float y, ActionType actionType) {
+		switch (actionType) {
+		case ActionType.Highlight:
+			HighlightCell (x, y);
+			HighlightCell (x + 1f, y);
+			HighlightCell (x + 1f, y - 1f);
+			HighlightCell (x, y - 1f);
+			break;
+		case ActionType.UnHighlight:
+			UnHighlightCell (x, y);
+			UnHighlightCell (x + 1f, y);
+			UnHighlightCell (x + 1f, y - 1f);
+			UnHighlightCell (x, y - 1f);
+			break;
+		case ActionType.Invert:
+			Debug.Log("Invert S Calling");
+			Invert (x, y);
+			Invert (x + 1f, y);
+			Invert (x + 1f, y - 1f);
+			Invert (x, y - 1f);
+			break;
+		}
 	}
 	
-	static void T () {
-		
+	static void T (float x, float y, ActionType actionType) {
+		switch (actionType) {
+		case ActionType.Highlight:
+			HighlightCell (x, y);
+			HighlightCell (x + 1f, y);
+			HighlightCell (x + 1f, y - 1f);
+			HighlightCell (x, y - 1f);
+			break;
+		case ActionType.UnHighlight:
+			UnHighlightCell (x, y);
+			UnHighlightCell (x + 1f, y);
+			UnHighlightCell (x + 1f, y - 1f);
+			UnHighlightCell (x, y - 1f);
+			break;
+		case ActionType.Invert:
+			Debug.Log("Invert T Calling");
+			Invert (x, y);
+			Invert (x + 1f, y);
+			Invert (x + 1f, y - 1f);
+			Invert (x, y - 1f);
+			break;
+		}
 	}
 	
-	static void Z () {
-		
+	static void Z (float x, float y, ActionType actionType) {
+		switch (actionType) {
+		case ActionType.Highlight:
+			HighlightCell (x, y);
+			HighlightCell (x + 1f, y);
+			HighlightCell (x + 1f, y - 1f);
+			HighlightCell (x, y - 1f);
+			break;
+		case ActionType.UnHighlight:
+			UnHighlightCell (x, y);
+			UnHighlightCell (x + 1f, y);
+			UnHighlightCell (x + 1f, y - 1f);
+			UnHighlightCell (x, y - 1f);
+			break;
+		case ActionType.Invert:
+			Debug.Log("Invert Z Calling");
+			Invert (x, y);
+			Invert (x + 1f, y);
+			Invert (x + 1f, y - 1f);
+			Invert (x, y - 1f);
+			break;
+		}
 	}
 
 	static void HighlightCell (float x, float y) {

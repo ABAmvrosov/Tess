@@ -46,12 +46,17 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\BoardManager.cs" />
+     <Compile Include="Assets\Scripts\CardsManager.cs" />
      <Compile Include="Assets\Scripts\Cell.cs" />
      <Compile Include="Assets\Scripts\Enums.cs" />
      <Compile Include="Assets\Scripts\EventManager.cs" />
      <Compile Include="Assets\Scripts\Figure.cs" />
+     <Compile Include="Assets\Scripts\FiguresUtils\BishopUtil.cs" />
+     <Compile Include="Assets\Scripts\FiguresUtils\KingUtil.cs" />
      <Compile Include="Assets\Scripts\FiguresUtils\KnightUtil.cs" />
      <Compile Include="Assets\Scripts\FiguresUtils\PawnUtil.cs" />
+     <Compile Include="Assets\Scripts\FiguresUtils\QueenUtil.cs" />
+     <Compile Include="Assets\Scripts\FiguresUtils\RookUtil.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GenerateBoard.cs" />
      <Compile Include="Assets\Scripts\GroundCard.cs" />

@@ -75,6 +75,7 @@ public class Cell : MonoBehaviour {
 		}
 		if (GameManager.gm.groundCard) {
 			GameManager.gm.groundCard.GroundEffect (this);
+			GameManager.gm.groundCard.UnHighlight (this);
 			GameManager.gm.groundCard = null;
 			EventManager.OnCardDone();
 		}
@@ -98,6 +99,18 @@ public class Cell : MonoBehaviour {
 			break;
 		case FigureTypes.Knight:
 			KnightUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
+			break;
+		case FigureTypes.Rook:
+			RookUtil.UnHighlightPossibleMoves (figure);
+			break;
+		case FigureTypes.King:
+			KingUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
+			break;
+		case FigureTypes.Bishop:
+			BishopUtil.UnHighlightPossibleMoves (figure);
+			break;
+		case FigureTypes.Queen:
+			QueenUtil.UnHighlightPossibleMoves (figure);
 			break;
 		}
 	}

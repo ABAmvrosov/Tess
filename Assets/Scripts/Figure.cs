@@ -9,13 +9,13 @@ public class Figure : MonoBehaviour {
 	public SideType side;
 
 	void Awake () {
-		FigureTypeDefine ();
+//		FigureTypeDefine ();
 		parentCell = transform.parent.gameObject.GetComponent<Cell> ();;
-		if (this.tag == "Dark") {
-			side = SideType.DarkSide;
-		} else {
-			side = SideType.LightSide;
-		}
+//		if (this.tag == "Dark") {
+//			side = SideType.DarkSide;
+//		} else {
+//			side = SideType.LightSide;
+//		}
 		EventManager.OnFigureMove += ColliderActivate;
 		EventManager.CancelFigurePicked  += ColliderActivate;
 		EventManager.OnFigurePick += ColliderDeactivate;
@@ -41,6 +41,18 @@ public class Figure : MonoBehaviour {
 			case FigureTypes.Knight:
 				KnightUtil.PossibleMoves (this);
 				break;
+			case FigureTypes.King:
+				KingUtil.PossibleMoves (this);
+				break;
+			case FigureTypes.Bishop:
+				BishopUtil.PossibleMoves (this);
+				break;
+			case FigureTypes.Queen:
+				QueenUtil.PossibleMoves (this);
+				break;
+			case FigureTypes.Rook:
+				RookUtil.PossibleMoves (this);
+				break;
 			}
 			EventManager.OnFigurePick();
 		}
@@ -54,27 +66,27 @@ public class Figure : MonoBehaviour {
 		GetComponent<BoxCollider2D> ().enabled = true;
 	}
 
-	void FigureTypeDefine () {
-		switch (this.name) {
-		case "Pawn":
-			figureType = FigureTypes.Pawn;
-			break;
-		case "Knight":
-			figureType = FigureTypes.Knight;
-			break;
-		case "Bishop":
-			figureType = FigureTypes.Bishop;
-			break;
-		case "Rook":
-			figureType = FigureTypes.Rook;
-			break;
-		case "Queen":
-			figureType = FigureTypes.Queen;
-			break;
-		case "King":
-			figureType = FigureTypes.King;
-			break;
-		}
-	}
+//	void FigureTypeDefine () {
+//		switch (this.name) {
+//		case "Pawn":
+//			figureType = FigureTypes.Pawn;
+//			break;
+//		case "Knight":
+//			figureType = FigureTypes.Knight;
+//			break;
+//		case "Bishop":
+//			figureType = FigureTypes.Bishop;
+//			break;
+//		case "Rook":
+//			figureType = FigureTypes.Rook;
+//			break;
+//		case "Queen":
+//			figureType = FigureTypes.Queen;
+//			break;
+//		case "King":
+//			figureType = FigureTypes.King;
+//			break;
+//		}
+//	}
 
 }

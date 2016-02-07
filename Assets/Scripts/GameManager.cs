@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void Reset () {
-		Application.LoadLevel ("sandbox");
+		Application.LoadLevel ("sandbox 1");
 	}
 
 	void TurnSwitch () {

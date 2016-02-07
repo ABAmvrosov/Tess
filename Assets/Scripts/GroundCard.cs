@@ -58,10 +58,10 @@ public class GroundCard : MonoBehaviour {
 			InvertUtil.Invert (cell, groundCardFigure);
 			break;
 		case GroundCardType.Paste:
-			PasteUtil.Invert (cell, groundCardFigure);
+			PasteUtil.Paste (cell, groundCardFigure);
 			break;
 		case GroundCardType.XOR:
-			XORUtil.Invert (cell, groundCardFigure);
+			XORUtil.XOR (cell, groundCardFigure);
 			break;
 		}
 	}

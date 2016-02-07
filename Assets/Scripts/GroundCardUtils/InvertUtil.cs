@@ -126,22 +126,22 @@ public static class InvertUtil {
 		switch (actionType) {
 		case ActionType.Highlight:
 			HighlightCell (x, y);
-			HighlightCell (x + 1f, y);
-			HighlightCell (x + 1f, y - 1f);
 			HighlightCell (x, y - 1f);
+			HighlightCell (x, y - 2f);
+			HighlightCell (x + 1f, y - 2f);
 			break;
 		case ActionType.UnHighlight:
 			UnHighlightCell (x, y);
-			UnHighlightCell (x + 1f, y);
-			UnHighlightCell (x + 1f, y - 1f);
 			UnHighlightCell (x, y - 1f);
+			UnHighlightCell (x, y - 2f);
+			UnHighlightCell (x + 1f, y - 2f);
 			break;
 		case ActionType.Invert:
 			Debug.Log("Invert L Calling");
 			Invert (x, y);
-			Invert (x + 1f, y);
-			Invert (x + 1f, y - 1f);
 			Invert (x, y - 1f);
+			Invert (x, y - 2f);
+			Invert (x + 1f, y - 2f);
 			break;
 		}
 	}
@@ -150,22 +150,22 @@ public static class InvertUtil {
 		switch (actionType) {
 		case ActionType.Highlight:
 			HighlightCell (x, y);
-			HighlightCell (x + 1f, y);
-			HighlightCell (x + 1f, y - 1f);
-			HighlightCell (x, y - 1f);
+			HighlightCell (x - 1f, y);
+			HighlightCell (x - 1f, y - 1f);
+			HighlightCell (x - 2f, y - 1f);
 			break;
 		case ActionType.UnHighlight:
 			UnHighlightCell (x, y);
-			UnHighlightCell (x + 1f, y);
-			UnHighlightCell (x + 1f, y - 1f);
-			UnHighlightCell (x, y - 1f);
+			UnHighlightCell (x - 1f, y);
+			UnHighlightCell (x - 1f, y - 1f);
+			UnHighlightCell (x - 2f, y - 1f);
 			break;
 		case ActionType.Invert:
 			Debug.Log("Invert S Calling");
 			Invert (x, y);
-			Invert (x + 1f, y);
-			Invert (x + 1f, y - 1f);
-			Invert (x, y - 1f);
+			Invert (x - 1f, y);
+			Invert (x - 1f, y - 1f);
+			Invert (x - 2f, y - 1f);
 			break;
 		}
 	}
@@ -175,21 +175,21 @@ public static class InvertUtil {
 		case ActionType.Highlight:
 			HighlightCell (x, y);
 			HighlightCell (x + 1f, y);
-			HighlightCell (x + 1f, y - 1f);
-			HighlightCell (x, y - 1f);
+			HighlightCell (x - 1f, y);
+			HighlightCell (x - 1f, y - 1f);
 			break;
 		case ActionType.UnHighlight:
 			UnHighlightCell (x, y);
 			UnHighlightCell (x + 1f, y);
-			UnHighlightCell (x + 1f, y - 1f);
-			UnHighlightCell (x, y - 1f);
+			UnHighlightCell (x - 1f, y);
+			UnHighlightCell (x - 1f, y - 1f);
 			break;
 		case ActionType.Invert:
 			Debug.Log("Invert T Calling");
 			Invert (x, y);
 			Invert (x + 1f, y);
-			Invert (x + 1f, y - 1f);
-			Invert (x, y - 1f);
+			Invert (x - 1f, y);
+			Invert (x - 1f, y - 1f);
 			break;
 		}
 	}
@@ -200,20 +200,20 @@ public static class InvertUtil {
 			HighlightCell (x, y);
 			HighlightCell (x + 1f, y);
 			HighlightCell (x + 1f, y - 1f);
-			HighlightCell (x, y - 1f);
+			HighlightCell (x + 2f, y - 1f);
 			break;
 		case ActionType.UnHighlight:
 			UnHighlightCell (x, y);
 			UnHighlightCell (x + 1f, y);
 			UnHighlightCell (x + 1f, y - 1f);
-			UnHighlightCell (x, y - 1f);
+			UnHighlightCell (x + 2f, y - 1f);
 			break;
 		case ActionType.Invert:
 			Debug.Log("Invert Z Calling");
 			Invert (x, y);
 			Invert (x + 1f, y);
 			Invert (x + 1f, y - 1f);
-			Invert (x, y - 1f);
+			Invert (x + 2f, y - 1f);
 			break;
 		}
 	}
@@ -236,8 +236,7 @@ public static class InvertUtil {
 		if (cell.tileType == TileTypes.Black) { 
 			cell.tileType = TileTypes.White;
 			cell.GetComponent<SpriteRenderer>().sprite = GameManager.gm.white;
-		} 
-		if (cell.tileType == TileTypes.White) { 
+		} else if (cell.tileType == TileTypes.White) { 
 			cell.tileType = TileTypes.Black;
 			cell.GetComponent<SpriteRenderer>().sprite = GameManager.gm.black;
 		}

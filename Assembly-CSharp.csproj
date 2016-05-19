@@ -45,38 +45,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BoardManager.cs" />
-     <Compile Include="Assets\Scripts\CardsManager.cs" />
+     <Compile Include="Assets\Scripts\Board.cs" />
      <Compile Include="Assets\Scripts\Cell.cs" />
      <Compile Include="Assets\Scripts\Enums.cs" />
      <Compile Include="Assets\Scripts\EventManager.cs" />
      <Compile Include="Assets\Scripts\Figure.cs" />
-     <Compile Include="Assets\Scripts\FiguresUtils\BishopUtil.cs" />
-     <Compile Include="Assets\Scripts\FiguresUtils\KingUtil.cs" />
-     <Compile Include="Assets\Scripts\FiguresUtils\KnightUtil.cs" />
-     <Compile Include="Assets\Scripts\FiguresUtils\PawnUtil.cs" />
-     <Compile Include="Assets\Scripts\FiguresUtils\QueenUtil.cs" />
-     <Compile Include="Assets\Scripts\FiguresUtils\RookUtil.cs" />
+     <Compile Include="Assets\Scripts\Figures\Bishop.cs" />
+     <Compile Include="Assets\Scripts\Figures\King.cs" />
+     <Compile Include="Assets\Scripts\Figures\Knight.cs" />
+     <Compile Include="Assets\Scripts\Figures\Pawn.cs" />
+     <Compile Include="Assets\Scripts\Figures\Queen.cs" />
+     <Compile Include="Assets\Scripts\Figures\Rook.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\GenerateBoard.cs" />
-     <Compile Include="Assets\Scripts\GroundCard.cs" />
-     <Compile Include="Assets\Scripts\GroundCardUtils\InvertUtil.cs" />
-     <Compile Include="Assets\Scripts\GroundCardUtils\PasteUtil.cs" />
-     <Compile Include="Assets\Scripts\GroundCardUtils\XORUtil.cs" />
-     <Compile Include="Assets\Scripts\MoveCard.cs" />
-     <Compile Include="Assets\Scripts\Player.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\Board.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\CellR.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\EnumsR.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\FigureR.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\Figures\Bishop.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\Figures\King.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\Figures\Knight.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\Figures\Pawn.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\Figures\Queen.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\Figures\Rook.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\GameManagerR.cs" />
-     <Compile Include="Assets\Scripts\Refactoring\GameResources.cs" />
+     <Compile Include="Assets\Scripts\GameResources.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

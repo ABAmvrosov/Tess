@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameResources : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class GameResources : MonoBehaviour {
 
 	void Awake() {
 		LoadResoursers ();
+
 	}
 
 	void LoadResoursers() {

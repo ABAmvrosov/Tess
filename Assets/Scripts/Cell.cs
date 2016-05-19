@@ -1,131 +1,138 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// This class represent a single Cell on the board
 public class Cell : MonoBehaviour {
+	public GameObject figure;
+	public bool possibleMove;
+	private TileType tileType;
+	private SpriteRenderer _spriteRenderer;
 
-	// public variables
-	public bool moveHighLightOn;  // used for define possible cells to move figure
-	public TileTypes tileType;    // Define a type of cell
-	public Figure figure;		  // Stores figure on it, if not then null
-
-	//private variables
-	private SpriteRenderer _spriteRenderer;	// used for highligh possible moves
-	private Sprite _cellType;				// used for define tileType variable
-
-	void Start() {
-
+	void Awake () {
 		_spriteRenderer = GetComponent<SpriteRenderer> ();
-		TileTypeDefine ();
-		CheckChild ();
-
-		// add cell to board 2d array
-		GameManager.gm.board.AddCell (this);
+		EventManager.OnFigureMove += OnFigureMove;
 	}
 
-	void Update () {
+	public void AddFigure(FigureType figureType, Side side) {
+		if (side == Side.Dark)
+			AddFigureBlack (figureType);
+		else
+			AddFigureWhite (figureType);
 	}
 
-	void OnMouseOver() {
-		if (GameManager.gm.groundCard) {
-			GameManager.gm.groundCard.Highlight (this);
-		} 
-		if (!GameManager.gm.groundCard && !moveHighLightOn)
-			_spriteRenderer.color = Color.green;
-
+	public void SetTileType(TileType tileType) {		
+		this.tileType = tileType;
+		_spriteRenderer.sprite = GameManager.gm.resourses.GetTileImage(tileType);			
 	}
 
-	void OnMouseExit() {
-		if (GameManager.gm.groundCard) {
-			GameManager.gm.groundCard.UnHighlight (this);
-		} else if (!moveHighLightOn) 
-			_spriteRenderer.color = Color.white;
+	public TileType GetTileType () {
+		return this.tileType;
 	}
 
-	void TileTypeDefine () {
-		switch (_spriteRenderer.sprite.name) 
-		{
-		case "White":
-			tileType = TileTypes.White;
-			break;
-		case "black":
-			tileType = TileTypes.Black;
-			break;
-		case "Wall":
-			tileType = TileTypes.Wall;
-			break;
-		}
+	public void Highlight () {
+		_spriteRenderer.color = Color.green;
 	}
-	
-	// called for move figure
-	void OnMouseDown() {
-		if (GameManager.gm.figureTaken && moveHighLightOn) {
-			if (figure) {
-				Figure pickedFigure = GameManager.gm.figureForMoveHandler;
-				GameManager.gm.DropFigure ();
-				PawnUtil.Attack (figure);
-				MoveFigure (pickedFigure);				
-				EventManager.OnFigureMove();
-			} else {
-				Figure pickedFigure = GameManager.gm.figureForMoveHandler;
-				GameManager.gm.DropFigure ();
-				MoveFigure (pickedFigure);
-				EventManager.OnFigureMove();
-			}
-		}
-		if (GameManager.gm.groundCard) {
-			GameManager.gm.groundCard.GroundEffect (this);
-			GameManager.gm.groundCard.UnHighlight (this);
-			GameManager.gm.groundCard = null;
-			EventManager.OnCardDone();
-		}
-	}	
 
-	void MoveFigure (Figure f) {
-		f.parentCell.UnHighlight();
-		Cell oldCell = f.parentCell;
-		f.parentCell = this;
-		oldCell.figure = null;
-		f.transform.position = this.transform.position;
-		figure = f;
+	public void UnHighlight () {
 		_spriteRenderer.color = Color.white;
-		f = null;
 	}
 
-	void UnHighlight () {
-		switch (figure.figureType) {
-		case FigureTypes.Pawn:
-			PawnUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
+	public Side GetCellSide () {
+		switch (this.tileType) {
+		case TileType.Black:
+			return Side.Dark;
+		case TileType.White:
+			return Side.Light;
+		default:
+			return Side.Undefined;
+		}
+	}
+
+	void OnFigureMove () {
+		if (possibleMove) {
+			possibleMove = false;
+			UnHighlight ();
+		}
+	}
+
+	void OnMouseOver () {
+		if (!possibleMove) {
+			Highlight ();
+		}
+	}
+
+	void OnMouseExit () {
+		if (!possibleMove) {
+			UnHighlight ();
+		}
+	}
+
+	void OnMouseDown () {
+		if (GameManager.gm.IsFigureTaken () && possibleMove) {
+			Board.MoveFigure (GameManager.gm.moveFromCell, this);
+		}
+	}
+
+	void AddFigureBlack (FigureType figureType) {
+		switch (figureType) {
+		case FigureType.Pawn:
+			InstantiateFigure ("Figures/Black/PawnBlack");
+			figure.AddComponent<Pawn> ().side = Side.Dark;
 			break;
-		case FigureTypes.Knight:
-			KnightUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
+		case FigureType.Bishop:
+			InstantiateFigure ("Figures/Black/BishopBlack");
+			figure.AddComponent<Bishop> ().side = Side.Dark;
 			break;
-		case FigureTypes.Rook:
-			RookUtil.UnHighlightPossibleMoves (figure);
+		case FigureType.Rook:
+			InstantiateFigure ("Figures/Black/RookBlack");
+			figure.AddComponent<Rook> ().side = Side.Dark;
 			break;
-		case FigureTypes.King:
-			KingUtil.UnHighlightPossibleMoves (transform.position.x, transform.position.y);
+		case FigureType.King:
+			InstantiateFigure ("Figures/Black/KingBlack");
+			figure.AddComponent<King> ().side = Side.Dark;
 			break;
-		case FigureTypes.Bishop:
-			BishopUtil.UnHighlightPossibleMoves (figure);
+		case FigureType.Knight:
+			InstantiateFigure ("Figures/Black/KnightBlack");
+			figure.AddComponent<Knight> ().side = Side.Dark;
 			break;
-		case FigureTypes.Queen:
-			QueenUtil.UnHighlightPossibleMoves (figure);
+		case FigureType.Queen:
+			InstantiateFigure ("Figures/Black/QueenBlack");
+			figure.AddComponent<Queen> ().side = Side.Dark;
 			break;
 		}
 	}
 
-	void CheckChild () {
-		if (transform.childCount == 0)
-			return;
-		foreach (Transform child in transform) {
-
-			figure = child.gameObject.GetComponent<Figure>();
-
+	void AddFigureWhite (FigureType figureType) {
+		switch (figureType) {
+		case FigureType.Pawn:
+			InstantiateFigure ("Figures/White/PawnWhite");
+			figure.AddComponent<Pawn> ().side = Side.Light;
+			break;
+		case FigureType.Bishop:
+			InstantiateFigure ("Figures/White/BishopWhite");
+			figure.AddComponent<Bishop> ().side = Side.Light;
+			break;
+		case FigureType.Rook:
+			InstantiateFigure ("Figures/White/RookWhite");
+			figure.AddComponent<Rook> ().side = Side.Light;
+			break;
+		case FigureType.King:
+			InstantiateFigure ("Figures/White/KingWhite");
+			figure.AddComponent<King> ().side = Side.Light;
+			break;
+		case FigureType.Knight:
+			InstantiateFigure ("Figures/White/KnightWhite");
+			figure.AddComponent<Knight> ().side = Side.Light;
+			break;
+		case FigureType.Queen:
+			InstantiateFigure ("Figures/White/QueenWhite");
+			figure.AddComponent<Queen> ().side = Side.Light;
+			break;
 		}
 	}
 
-	void DropFigure () {
-		figure = null; 
+	void InstantiateFigure (string prefabPath) {
+		Vector3 position = new Vector3 (this.transform.position.x, this.transform.position.y, -0.1f);
+		figure = Instantiate (Resources.Load (prefabPath), position, Quaternion.identity) as GameObject;
+		figure.transform.SetParent (this.transform);
 	}
 }

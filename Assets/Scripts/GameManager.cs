@@ -1,68 +1,52 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+	public Board board;
+	public Text playerTurn;
+	[HideInInspector]
 	public static GameManager gm;
-//	public EventManager events;
-	public BoardManager board;
-	public Figure figureForMoveHandler;
-	public GroundCard groundCard;
-	public bool figureTaken;
-	public Text UITurn;
-	public Sprite white;
-	public Sprite black;
-	public Sprite wall;
-	public SideType activeSide;
+	[HideInInspector]
+	public GameResources resourses;
+	[HideInInspector]
+	public Cell moveFromCell;
 
-	[HideInInspector]
-	public Player playerOne;	
-	[HideInInspector]
-	public Player playerTwo;
+	private enum PlayerTurn {Player1, Player2}
+	private PlayerTurn currentPlayer;
+	private bool isFigureTaken;
 
 	void Awake () {
 		if (gm == null)
 			gm = this.GetComponent<GameManager> ();
-		if (board == null)
-			board = GameObject.FindGameObjectWithTag ("Board").GetComponent<BoardManager> ();
-		//		if (events == null)
-		//			events = GameObject.FindGameObjectWithTag ("EventManager").GetComponent<EventManager> ();
-
-		activeSide = SideType.LightSide;
-		playerOne = new Player ();
-		playerOne.side = SideType.LightSide;
-		playerTwo = new Player ();
-		playerTwo.side = SideType.DarkSide;
-
-		UITurn.text = "Player 1 turn";
-		EventManager.OnCardDone += TurnSwitch;
+		if (resourses == null)
+			resourses = this.GetComponent<GameResources> ();
+		currentPlayer = PlayerTurn.Player1;
+		EventManager.OnFigureMove += DropFigure;
+		EventManager.OnFigureMove += EndTurn;
 	}
 
-	public void TakeFigure (Figure figure) {
-		figureForMoveHandler = figure;
-		figureTaken = true;
+	public bool IsFigureTaken() {
+		return isFigureTaken;
 	}
 
-	public void DropFigure () {
-		figureForMoveHandler = null;
-		figureTaken = false;
+	public void PickUpFigure() {
+		isFigureTaken = true;
 	}
 
-	public void Reset () {
-		Application.LoadLevel ("sandbox 1");
+	public void DropFigure() {
+		moveFromCell = null;
+		isFigureTaken = false;
 	}
 
-	void TurnSwitch () {
-		switch (UITurn.text) {
-		case "Player 1 turn":
-			UITurn.text = "Player 2 turn";
-			activeSide = SideType.DarkSide;
-			break;
-		case "Player 2 turn":
-			UITurn.text = "Player 1 turn";
-			activeSide = SideType.LightSide;
-			break;
+	void EndTurn () {
+		if (currentPlayer == PlayerTurn.Player1) {
+			currentPlayer = PlayerTurn.Player2;
+			playerTurn.text = "Player 2";
+		} else {
+			currentPlayer = PlayerTurn.Player1;
+			playerTurn.text = "Player 1";
 		}
 	}
 }

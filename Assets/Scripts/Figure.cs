@@ -1,92 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Figure : MonoBehaviour {
+public abstract class Figure : MonoBehaviour {
+	public Side side;
+	protected int rowIndex;
+	protected int colIndex;
 
-	public FigureTypes figureType;
-	public bool isActive = false;
-	public Cell parentCell;
-	public SideType side;
-
-	void Awake () {
-//		FigureTypeDefine ();
-		parentCell = transform.parent.gameObject.GetComponent<Cell> ();;
-//		if (this.tag == "Dark") {
-//			side = SideType.DarkSide;
-//		} else {
-//			side = SideType.LightSide;
-//		}
-		EventManager.OnFigureMove += ColliderActivate;
-		EventManager.CancelFigurePicked  += ColliderActivate;
-		EventManager.OnFigurePick += ColliderDeactivate;
-		EventManager.OnCardDone += ColliderDeactivate;
+	void Start() {
+		UpdatePosition ();
+		EventManager.OnFigureMove += UpdatePosition;
 	}
 
-	void Update () {
-		if (isActive && Input.GetButtonDown("Cancel")) {
-			PawnUtil.UnHighlightPossibleMoves (parentCell.transform.position.x, parentCell.transform.position.y);
-			GameManager.gm.DropFigure ();
-			EventManager.CancelFigurePicked();
+	void OnMouseDown() {
+		if (!GameManager.gm.IsFigureTaken()) {
+			GameManager.gm.PickUpFigure ();
+			GameManager.gm.moveFromCell = GameManager.gm.board.GetCell (rowIndex, colIndex);
+			PossibleMoves ();
 		}
 	}
 
-	void OnMouseDown () {
-		if (!GameManager.gm.figureTaken) {
-			GameManager.gm.TakeFigure (this);
-			isActive = true;
-			switch (figureType) {
-			case FigureTypes.Pawn:				
-				PawnUtil.PossibleMoves (this);
-				break;
-			case FigureTypes.Knight:
-				KnightUtil.PossibleMoves (this);
-				break;
-			case FigureTypes.King:
-				KingUtil.PossibleMoves (this);
-				break;
-			case FigureTypes.Bishop:
-				BishopUtil.PossibleMoves (this);
-				break;
-			case FigureTypes.Queen:
-				QueenUtil.PossibleMoves (this);
-				break;
-			case FigureTypes.Rook:
-				RookUtil.PossibleMoves (this);
-				break;
-			}
-			EventManager.OnFigurePick();
-		}
+	void UpdatePosition () {
+		rowIndex = (int)this.transform.position.x;
+		colIndex = (int)this.transform.position.y;
 	}
 
-	void ColliderDeactivate () {
-		GetComponent<BoxCollider2D> ().enabled = false;
+	protected bool HighlightCell(int rowIndex, int colIndex) {
+		Cell cell = GameManager.gm.board.GetCell (rowIndex, colIndex);
+		if (cell != null && cell.GetTileType () != TileType.Wall && cell.figure == null) {
+			cell.Highlight ();
+			cell.possibleMove = true;
+			return true;
+		} else
+			return false;
 	}
 
-	void ColliderActivate () {
-		GetComponent<BoxCollider2D> ().enabled = true;
+	protected bool IsFriendlyTile () {
+		return side == GameManager.gm.board.GetCell (rowIndex, colIndex).GetCellSide ();
 	}
 
-//	void FigureTypeDefine () {
-//		switch (this.name) {
-//		case "Pawn":
-//			figureType = FigureTypes.Pawn;
-//			break;
-//		case "Knight":
-//			figureType = FigureTypes.Knight;
-//			break;
-//		case "Bishop":
-//			figureType = FigureTypes.Bishop;
-//			break;
-//		case "Rook":
-//			figureType = FigureTypes.Rook;
-//			break;
-//		case "Queen":
-//			figureType = FigureTypes.Queen;
-//			break;
-//		case "King":
-//			figureType = FigureTypes.King;
-//			break;
-//		}
-//	}
-
+	protected abstract void PossibleMoves ();
 }

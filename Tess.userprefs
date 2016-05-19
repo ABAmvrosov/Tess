@@ -1,20 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Refactoring\Board.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cell.cs">
     <Files>
-      <File FileName="Assets\Scripts\Refactoring\GameManagerR.cs" Line="15" Column="1" />
-      <File FileName="Assets\Scripts\Refactoring\Board.cs" Line="57" Column="31" />
-      <File FileName="Assets\Scripts\Refactoring\EnumsR.cs" Line="3" Column="21" />
-      <File FileName="Assets\Scripts\Refactoring\Figures\Pawn.cs" Line="13" Column="57" />
-      <File FileName="Assets\Scripts\Refactoring\FigureR.cs" Line="10" Column="22" />
-      <File FileName="Assets\Scripts\Refactoring\CellR.cs" Line="29" Column="59" />
-      <File FileName="Assets\Scripts\Refactoring\Figures\Bishop.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Refactoring\Figures\King.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Refactoring\Figures\Knight.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Refactoring\Figures\Queen.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Refactoring\Figures\Rook.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\FiguresUtils\PawnUtil.cs" Line="42" Column="4" />
-      <File FileName="Assets\Scripts\Refactoring\GameResources.cs" Line="28" Column="16" />
+      <File FileName="Assets\Scripts\Cell.cs" Line="4" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

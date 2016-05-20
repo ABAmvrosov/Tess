@@ -12,14 +12,13 @@ public abstract class Board : MonoBehaviour {
 		InitializeBoard ();
 	}
 
-	/* ---------- Interface ---------- */
+	/* --------------- Interface --------------- */
 
 	public abstract Tile GetTile (int rowIndex, int colIndex);
 	public abstract void HighlightPossibleMoves (Figure figure);
 	public abstract bool HighlightTile (int rowIndex, int colIndex);
-	public abstract void MoveFigure(Tile destTile);
 
-	/* ---------- Other methods ---------- */
+	/* ------------- Other methods ------------- */
 
 	protected abstract void InitializeBoard();
 

@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour {
 
 	void OnMouseDown () {
 		if (possibleMove) {
-			GameManager.gm.board.MoveFigure (this);
+			GameManager.gm.figureManager.MoveFigure (this);
 		}
 	}
 
@@ -32,7 +32,7 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	/* ---------- Interface ---------- */
+	/* --------------- Interface --------------- */
 
 	public void Highlight () {
 		_spriteRenderer.color = Color.green;
@@ -53,7 +53,7 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	/* ---------- Other methods ---------- */
+	/* ------------- Other methods ------------- */
 
 	void OnFigureMove () {
 		if (possibleMove) {

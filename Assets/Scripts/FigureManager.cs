@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FigureManager : MonoBehaviour {
+	public Figure selectedFigure;
+
 	public Dictionary<Figure, Tile> figuresOnBoard = new Dictionary<Figure, Tile>();
 
 	private List<GameObject> whiteFigures = new List<GameObject>();
@@ -26,7 +28,8 @@ public class FigureManager : MonoBehaviour {
 		}
 	}
 
-	public void AddFigure (GameObject figure, Side side) {
+	public void RegisterFigure (GameObject figure, Side side, Tile tile) {
+		figuresOnBoard.Add (figure.GetComponent<Figure> (), tile);
 		if (side == Side.Black)
 			blackFigures.Add (figure);
 		else
@@ -38,11 +41,20 @@ public class FigureManager : MonoBehaviour {
 		figuresOnBoard.TryGetValue (figure, out tile);
 		return tile;
 	}
-//
-//	public void RelocateFigure (Figure figure, Tile destination) {
-//		figuresOnBoard.Remove (figure);
-//		figuresOnBoard.Add (figure, destination);
-//	}
+
+	public bool isTileEmpty (Tile tile) {
+		return figuresOnBoard.ContainsValue (tile);
+	}
+
+	public void MoveFigure (Tile destination) {
+		Tile startTile = null;
+		figuresOnBoard.TryGetValue (selectedFigure, out startTile);
+		figuresOnBoard.Remove (selectedFigure);
+		figuresOnBoard.Add (selectedFigure, destination);
+		selectedFigure.transform.SetParent (destination.transform);
+		selectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
+		EventManager.OnFigureMove ();
+	}
 
 	/* ------------- Other methods ------------- */
 

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public sealed class PrototypeBoard : Board {
 
 	public int dimension;
-	public Figure selectedFigure;
 
 	private FigureFactory figureFactory;
 	private TileFactory tileFactory;
@@ -18,14 +17,14 @@ public sealed class PrototypeBoard : Board {
 		tileFactory = GetComponent<TileFactory> ();
 	}
 
-	/* ---------- Interface ---------- */
+	/* --------------- Interface --------------- */
 
 	public override Tile GetTile(int rowIndex, int colIndex) {
 		return (isCoordinateOk(rowIndex, colIndex)) ? _tileArray [colIndex, rowIndex] : null;
 	}
 
 	public override void HighlightPossibleMoves (Figure figure) {
-		selectedFigure = figure;
+		GameManager.gm.figureManager.selectedFigure = figure;
 		Tile startTile = GameManager.gm.figureManager.FigurePosition (figure);
 		figure.moveModel.HighlightMoves (figure, startTile);
 	}
@@ -33,7 +32,7 @@ public sealed class PrototypeBoard : Board {
 	public override bool HighlightTile (int rowIndex, int colIndex) {
 		if (isCoordinateOk (rowIndex, colIndex)) {
 			Tile tile = _tileArray [colIndex, rowIndex];
-			if (tile.type != TileType.Wall && !GameManager.gm.figureManager.figuresOnBoard.ContainsValue(tile)) {
+			if (tile.type != TileType.Wall && !GameManager.gm.figureManager.isTileEmpty(tile)) {
 				tile.Highlight ();
 				tile.possibleMove = true;
 				return true;
@@ -42,17 +41,7 @@ public sealed class PrototypeBoard : Board {
 		} return false;
 	}
 
-	public override void MoveFigure (Tile destTile) {
-		Tile startTile = null;
-		GameManager.gm.figureManager.figuresOnBoard.TryGetValue (selectedFigure, out startTile);
-		GameManager.gm.figureManager.figuresOnBoard.Remove (selectedFigure);
-		GameManager.gm.figureManager.figuresOnBoard.Add (selectedFigure, destTile);
-		selectedFigure.transform.SetParent (destTile.transform);
-		selectedFigure.transform.position = new Vector3 (destTile.transform.position.x, destTile.transform.position.y, 0f);
-		EventManager.OnFigureMove ();
-	}
-
-	/* ---------- Other methods ---------- */
+	/* ------------- Other methods ------------- */
 
 	protected override void InitializeBoard() {
 		BuildBoard (dimension);
@@ -105,9 +94,7 @@ public sealed class PrototypeBoard : Board {
 	protected override void AddFigure (FigureType figureType, Side side, int rowIndex, int colIndex) {
 		GameObject figure = figureFactory.GetFigure (figureType, side) as GameObject;
 		figure.transform.position = new Vector3 (colIndex, rowIndex, -0.1f);
-
-		GameManager.gm.figureManager.AddFigure (figure, side);
-		GameManager.gm.figureManager.figuresOnBoard.Add (figure.GetComponent<Figure> (), _tileArray[rowIndex, colIndex]);
+		GameManager.gm.figureManager.RegisterFigure (figure, side, _tileArray[rowIndex, colIndex]);
 	}
 
 	protected override bool isCoordinateOk (int rowIndex, int colIndex) {

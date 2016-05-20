@@ -46,10 +46,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Board.cs" />
-     <Compile Include="Assets\Scripts\Cell.cs" />
      <Compile Include="Assets\Scripts\Enums.cs" />
      <Compile Include="Assets\Scripts\EventManager.cs" />
      <Compile Include="Assets\Scripts\Figure.cs" />
+     <Compile Include="Assets\Scripts\FigureFactory.cs" />
+     <Compile Include="Assets\Scripts\FigureManager.cs" />
      <Compile Include="Assets\Scripts\Figures\Bishop.cs" />
      <Compile Include="Assets\Scripts\Figures\King.cs" />
      <Compile Include="Assets\Scripts\Figures\Knight.cs" />
@@ -57,8 +58,17 @@
      <Compile Include="Assets\Scripts\Figures\Queen.cs" />
      <Compile Include="Assets\Scripts\Figures\Rook.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\GameResources.cs" />
      <Compile Include="Assets\Scripts\MainMenuManager.cs" />
+     <Compile Include="Assets\Scripts\MoveModel.cs" />
+     <Compile Include="Assets\Scripts\MoveModels\BishopMoveModel.cs" />
+     <Compile Include="Assets\Scripts\MoveModels\KingMoveModel.cs" />
+     <Compile Include="Assets\Scripts\MoveModels\KnightMoveModel.cs" />
+     <Compile Include="Assets\Scripts\MoveModels\PawnMoveModel.cs" />
+     <Compile Include="Assets\Scripts\MoveModels\QueenMoveModel.cs" />
+     <Compile Include="Assets\Scripts\MoveModels\RookMoveModel.cs" />
+     <Compile Include="Assets\Scripts\PrototypeBoard.cs" />
+     <Compile Include="Assets\Scripts\Tile.cs" />
+     <Compile Include="Assets\Scripts\TileFactory.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -1,3 +1,3 @@
-﻿public enum Side {Light, Dark, Undefined}
+﻿public enum Side {White, Black, Undefined}
 public enum FigureType {Pawn, Knight, Bishop, Rook, Queen, King}
-public enum TileType {White, Black, Wall};
+public enum TileType {White, Black, Wall}

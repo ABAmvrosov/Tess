@@ -3,32 +3,32 @@ using System.Collections;
 
 public class Tile : MonoBehaviour {
 	
-	public bool possibleMove;
-	public TileType type;
-	public Figure figure;
-	private SpriteRenderer _spriteRenderer;
+	public bool PossibleMove { get; set; }
+	public TileType Type;
+	public Figure Figure;
+	private SpriteRenderer spriteRenderer;
 
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Awake () {
-		_spriteRenderer = GetComponent<SpriteRenderer> ();
+		spriteRenderer = GetComponent<SpriteRenderer> ();
 		EventManager.OnFigureMove += OnFigureMove;
 	}
 
 	void OnMouseOver () {
-		if (!possibleMove) {
+		if (!PossibleMove) {
 			Highlight ();
 		}
 	}
 
 	void OnMouseDown () {
-		if (possibleMove) {
-			GameManager.gm.figureManager.MoveFigure (this);
+		if (PossibleMove) {
+			GameManager.GM.FigureManager.Move (this);
 		}
 	}
 
 	void OnMouseExit () {
-		if (!possibleMove) {
+		if (!PossibleMove) {
 			UnHighlight ();
 		}
 	}
@@ -36,19 +36,19 @@ public class Tile : MonoBehaviour {
 	/* --------------- Interface --------------- */
 
 	public void Highlight () {
-		_spriteRenderer.color = Color.green;
+		spriteRenderer.color = Color.green;
 	}
 
 	public void HighlightAttack () {
-		_spriteRenderer.color = Color.red;
+		spriteRenderer.color = Color.red;
 	}
 
 	public void UnHighlight () {
-		_spriteRenderer.color = Color.white;
+		spriteRenderer.color = Color.white;
 	}
 
 	public Side GetTileSide () {
-		switch (this.type) {
+		switch (this.Type) {
 		case TileType.Black:
 			return Side.Black;
 		case TileType.White:
@@ -61,8 +61,8 @@ public class Tile : MonoBehaviour {
 	/* ------------- Other methods ------------- */
 
 	void OnFigureMove () {
-		if (possibleMove) {
-			possibleMove = false;
+		if (PossibleMove) {
+			PossibleMove = false;
 			UnHighlight ();
 		}
 	}

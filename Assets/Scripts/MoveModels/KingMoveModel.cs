@@ -3,7 +3,7 @@
 //	private int[,] bonusMoves = {};
 
 	public override void HighlightMoves (Figure figure, Tile tile) {
-		if (tile.GetTileSide () != figure.side) {
+		if (tile.GetTileSide () != figure.FigureSide) {
 			DefaultMoves (figure);
 		} else {
 			BonusMoves (figure);
@@ -12,7 +12,7 @@
 
 	protected override void DefaultMoves (Figure figure) {
 		for (int i = 0; i < moves.GetLength (0); i++) {
-			GameManager.gm.board.HighlightTile ((int)figure.transform.position.x + moves [i, 0], (int)figure.transform.position.y + moves [i, 1]);
+			GameManager.GM.GameBoard.HighlightTile ((int)figure.transform.position.x + moves [i, 0], (int)figure.transform.position.y + moves [i, 1]);
 		}
 
 	}

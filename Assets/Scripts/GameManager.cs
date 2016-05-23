@@ -5,26 +5,35 @@ using UnityEngine.SceneManagement;
 
 public sealed class GameManager : MonoBehaviour {
 	
-	public FigureManager figureManager { get; private set;}
 	[HideInInspector]
-	public static GameManager gm;
+	public static GameManager GM;
 
-	public Board board;
-	public Text playerTurn;
-	public GameObject gameOverScreen;
-	public Text winText;
-	public Side currentPlayer { get; private set;}
+	public Text PlayerTurnText;
+	public GameObject GameOverScreen;
+	public Text WinText;
+
+	public Board GameBoard { get; private set;}
+	public FigureManager FigureManager { get; private set;}
+	public Side CurrentPlayer { get; private set;}
 
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Awake () {
-		if (gm == null)
-			gm = this.GetComponent<GameManager> ();
-		if (figureManager == null)
-			figureManager = this.GetComponent<FigureManager> ();
-		currentPlayer = Side.White;
+		if (GM == null)
+			GM = this.GetComponent<GameManager> ();
+		if (FigureManager == null)
+			FigureManager = this.GetComponent<FigureManager> ();
+		if (GameBoard == null)
+			GameBoard = GameObject.FindGameObjectWithTag ("Board").GetComponent<Board> ();
+		if (PlayerTurnText == null)
+			Debug.LogError ("Player turn text not specified");
+		if (GameOverScreen == null)
+			Debug.LogError ("GameOverScreen object not specified");
+		if (WinText == null)
+			Debug.LogError ("Win text not specified");
+		CurrentPlayer = Side.White;
 		EventManager.OnFigureMove += EndTurn;
-		EventManager.KingDead += GameOver;
+		EventManager.KingDead += EndGame;
 	}
 
 
@@ -37,17 +46,17 @@ public sealed class GameManager : MonoBehaviour {
 	/* ------------- Other methods ------------- */
 
 	void EndTurn () {
-		if (currentPlayer == Side.White) {
-			currentPlayer = Side.Black;
-			playerTurn.text = "Player 2 - Black";
+		if (CurrentPlayer == Side.White) {
+			CurrentPlayer = Side.Black;
+			PlayerTurnText.text = "Player 2 - Black";
 		} else {
-			currentPlayer = Side.White;
-			playerTurn.text = "Player 1 - White";
+			CurrentPlayer = Side.White;
+			PlayerTurnText.text = "Player 1 - White";
 		}
 	}
 
-	void GameOver () {
-		winText.text = playerTurn.text + " WIN";
-		gameOverScreen.SetActive (true);
+	void EndGame () {
+		WinText.text = PlayerTurnText.text + " WIN";
+		GameOverScreen.SetActive (true);
 	}
 }

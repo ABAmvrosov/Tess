@@ -3,78 +3,78 @@ using System.Collections;
 
 public class FigureFactory : MonoBehaviour {
 
-	public GameObject figurePrefab;
-	public GameObject figureObjectsContainer;
+	public GameObject FigurePrefab;
+	public GameObject FigureObjectsContainer;
 
-	public GameObject GetFigure (FigureType figureType, Side side) {
-		GameObject figure = Instantiate (figurePrefab) as GameObject;
-		figure.transform.SetParent (figureObjectsContainer.transform);
-		if (side == Side.Black) 
+	public GameObject GetFigure (FigureType figureType, Side figureSide) {
+		GameObject figure = Instantiate (FigurePrefab) as GameObject;
+		figure.transform.SetParent (FigureObjectsContainer.transform);
+		if (figureSide == Side.Black) 
 			ConfigureBlack (figureType, figure);
 		else
 			ConfigureWhite (figureType, figure);
 		return figure;
 	}
 
-	void ConfigureBlack (FigureType figureType, GameObject figure) {
+	void ConfigureBlack (FigureType figureType, GameObject figureObject) {
 		Figure figureComponent = null;
 		switch (figureType) {
 		case FigureType.Pawn:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Pawn");
-			figureComponent = figure.AddComponent<Pawn> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Pawn");
+			figureComponent = figureObject.AddComponent<Pawn> ();
 			break;
 		case FigureType.Bishop:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Bishop");
-			figureComponent = figure.AddComponent<Bishop> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Bishop");
+			figureComponent = figureObject.AddComponent<Bishop> ();
 			break;
 		case FigureType.Rook:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Rook");
-			figureComponent = figure.AddComponent<Rook> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Rook");
+			figureComponent = figureObject.AddComponent<Rook> ();
 			break;
 		case FigureType.King:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/King");
-			figureComponent = figure.AddComponent<King> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/King");
+			figureComponent = figureObject.AddComponent<King> ();
 			break;
 		case FigureType.Knight:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Knight");
-			figureComponent = figure.AddComponent<Knight> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Knight");
+			figureComponent = figureObject.AddComponent<Knight> ();
 			break;
 		case FigureType.Queen:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Queen");
-			figureComponent = figure.AddComponent<Queen> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Queen");
+			figureComponent = figureObject.AddComponent<Queen> ();
 			break;
 		}
-		figureComponent.side = Side.Black;
+		figureComponent.FigureSide = Side.Black;
 	}
 
-	void ConfigureWhite (FigureType figureType, GameObject figure) {
+	void ConfigureWhite (FigureType figureType, GameObject figureObject) {
 		Figure figureComponent = null;
 		switch (figureType) {
 		case FigureType.Pawn:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Pawn");
-			figureComponent = figure.AddComponent<Pawn> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Pawn");
+			figureComponent = figureObject.AddComponent<Pawn> ();
 			break;
 		case FigureType.Bishop:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Bishop");
-			figureComponent = figure.AddComponent<Bishop> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Bishop");
+			figureComponent = figureObject.AddComponent<Bishop> ();
 			break;
 		case FigureType.Rook:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Rook");
-			figureComponent = figure.AddComponent<Rook> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Rook");
+			figureComponent = figureObject.AddComponent<Rook> ();
 			break;
 		case FigureType.King:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/King");
-			figureComponent = figure.AddComponent<King> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/King");
+			figureComponent = figureObject.AddComponent<King> ();
 			break;
 		case FigureType.Knight:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Knight");
-			figureComponent = figure.AddComponent<Knight> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Knight");
+			figureComponent = figureObject.AddComponent<Knight> ();
 			break;
 		case FigureType.Queen:
-			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Queen");
-			figureComponent = figure.AddComponent<Queen> ();
+			figureObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Queen");
+			figureComponent = figureObject.AddComponent<Queen> ();
 			break;
 		}
-		figureComponent.side = Side.White;
+		figureComponent.FigureSide = Side.White;
 	}
 }

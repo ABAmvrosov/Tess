@@ -3,7 +3,7 @@ using System.Collections;
 
 public class King : Figure {
 	void Start () {
-		moveModel = new KingMoveModel ();
+		FigureMoveModel = new KingMoveModel ();
 	}
 
 	void OnDestroy () {

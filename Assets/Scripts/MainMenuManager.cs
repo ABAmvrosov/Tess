@@ -9,43 +9,43 @@ using UnityEngine.SceneManagement;
 public class MainMenuManager : MonoBehaviour {
 	
 	// Submenus
-	public GameObject mainMenu;
+	public GameObject MainMenu;
 	//public GameObject optionsMenu;
 	//public GameObject aboutMenu;
-	public Text titleText;
+	public Text TitleText;
 
-	private string _mainTitle;
+	private string mainTitle;
 
 	void Awake()
 	{
-		_mainTitle = titleText.text;
+		mainTitle = TitleText.text;
 		// determine if Quit button should be shown
 		ShowMenu("mainMenu");
 	}
 
 	public void ShowMenu(string name)
 	{
-		mainMenu.SetActive (false);
+		MainMenu.SetActive (false);
 		//aboutMenu.SetActive(false);
 		//optionsMenu.SetActive(false);
 
 		switch(name) {
 		case "mainMenu":
-			mainMenu.SetActive (true);
-			titleText.text = _mainTitle;
+			MainMenu.SetActive (true);
+			TitleText.text = mainTitle;
 			break;
 		case "optionsMenu":
 			//optionsMenu.SetActive(true);
-			titleText.text = "Options";
+			TitleText.text = "Options";
 			break;
 		case "About":
 			//aboutMenu.SetActive(true);
-			titleText.text = "About";
+			TitleText.text = "About";
 			break;
 		}
 	}
 
-	public void loadLevel(string leveltoLoad)
+	public void LoadLevel(string leveltoLoad)
 	{
 		SceneManager.LoadScene(leveltoLoad);
 	}

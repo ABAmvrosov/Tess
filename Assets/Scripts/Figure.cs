@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Figure : MonoBehaviour {
 
-	public Side side;
-	public MoveModel moveModel;
+	public Side FigureSide;
+	public MoveModel FigureMoveModel;
 	public int RowIndex {
 		get;
 		private set;
@@ -23,7 +23,7 @@ public class Figure : MonoBehaviour {
 	}
 
 	void OnMouseDown () {		
-		GameManager.gm.board.HighlightPossibleMoves (this);
+		GameManager.GM.GameBoard.HighlightPossibleMoves (this);
 	}
 
 	void OnDestroy () {
@@ -32,8 +32,8 @@ public class Figure : MonoBehaviour {
 
 	/* --------------- Interface --------------- */
 
-	public bool isEnemy () {
-		if (side != GameManager.gm.currentPlayer) {
+	public bool IsEnemy () {
+		if (FigureSide != GameManager.GM.CurrentPlayer) {
 			return true;
 		} else
 			return false;

@@ -9,6 +9,8 @@ public abstract class Board : MonoBehaviour {
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Start() {
+		if (tileObjectsContainer == null)
+			Debug.LogWarning ("Tile Objects Container not specified");
 		InitializeBoard ();
 	}
 
@@ -22,7 +24,7 @@ public abstract class Board : MonoBehaviour {
 
 	protected abstract void InitializeBoard();
 
-	protected abstract void AddFigure (FigureType figureType, Side side, int rowIndex, int colIndex);
+	protected abstract void AddFigure (FigureType figureType, Side figureSide, int rowIndex, int colIndex);
 
-	protected abstract bool isCoordinateOk (int rowIndex, int colIndex);
+	protected abstract bool CheckCoordinate (int rowIndex, int colIndex);
 }

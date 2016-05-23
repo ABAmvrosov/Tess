@@ -4,11 +4,11 @@ using System.Collections;
 public class FigureFactory : MonoBehaviour {
 
 	public GameObject figurePrefab;
-	public GameObject figuresContainer;
+	public GameObject figureObjectsContainer;
 
 	public GameObject GetFigure (FigureType figureType, Side side) {
 		GameObject figure = Instantiate (figurePrefab) as GameObject;
-		figure.transform.SetParent (figuresContainer.transform);
+		figure.transform.SetParent (figureObjectsContainer.transform);
 		if (side == Side.Black) 
 			ConfigureBlack (figureType, figure);
 		else

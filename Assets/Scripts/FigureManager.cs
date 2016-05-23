@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FigureManager : MonoBehaviour {
+public sealed class FigureManager : MonoBehaviour {
+	
+	[HideInInspector]
 	public Figure selectedFigure;
-
-	public Dictionary<Figure, Tile> figuresOnBoard = new Dictionary<Figure, Tile>();
+	[HideInInspector]
+	public Dictionary<Tile, Figure> figuresOnBoard = new Dictionary<Tile, Figure>();
 
 	private List<GameObject> whiteFigures = new List<GameObject>();
 	private List<GameObject> blackFigures = new List<GameObject>();
@@ -29,31 +31,30 @@ public class FigureManager : MonoBehaviour {
 	}
 
 	public void RegisterFigure (GameObject figure, Side side, Tile tile) {
-		figuresOnBoard.Add (figure.GetComponent<Figure> (), tile);
+		figuresOnBoard.Add (tile, figure.GetComponent<Figure> ());
 		if (side == Side.Black)
 			blackFigures.Add (figure);
 		else
 			whiteFigures.Add (figure);
 	}
 
-	public Tile FigurePosition (Figure figure) {
-		Tile tile = null;
-		figuresOnBoard.TryGetValue (figure, out tile);
-		return tile;
-	}
-
-	public bool isTileEmpty (Tile tile) {
-		return figuresOnBoard.ContainsValue (tile);
+	public Figure FigureOnTile (Tile tile) {
+		Figure figure = null;
+		figuresOnBoard.TryGetValue(tile, out figure);
+		return figure;
 	}
 
 	public void MoveFigure (Tile destination) {
-		Tile startTile = null;
-		figuresOnBoard.TryGetValue (selectedFigure, out startTile);
-		figuresOnBoard.Remove (selectedFigure);
-		figuresOnBoard.Add (selectedFigure, destination);
+		Tile startTile = GameManager.gm.board.GetTile(selectedFigure.RowIndex, selectedFigure.ColIndex);
+		figuresOnBoard.Remove (startTile);
+		figuresOnBoard.Add (destination, selectedFigure);
 		selectedFigure.transform.SetParent (destination.transform);
 		selectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
 		EventManager.OnFigureMove ();
+	}
+
+	public void AttackFigure (Tile destination) {
+		
 	}
 
 	/* ------------- Other methods ------------- */

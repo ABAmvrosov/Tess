@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public abstract class Board : MonoBehaviour {
 
 	[SerializeField]
-	protected GameObject tileContainer;
+	protected GameObject tileObjectsContainer;
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Start() {

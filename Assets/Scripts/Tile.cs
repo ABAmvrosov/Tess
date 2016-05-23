@@ -5,6 +5,7 @@ public class Tile : MonoBehaviour {
 	
 	public bool possibleMove;
 	public TileType type;
+	public Figure figure;
 	private SpriteRenderer _spriteRenderer;
 
 	/* ---------- MonoBehavior methods ---------- */
@@ -36,6 +37,10 @@ public class Tile : MonoBehaviour {
 
 	public void Highlight () {
 		_spriteRenderer.color = Color.green;
+	}
+
+	public void HighlightAttack () {
+		_spriteRenderer.color = Color.red;
 	}
 
 	public void UnHighlight () {

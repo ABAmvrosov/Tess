@@ -25,19 +25,25 @@ public sealed class PrototypeBoard : Board {
 
 	public override void HighlightPossibleMoves (Figure figure) {
 		GameManager.gm.figureManager.selectedFigure = figure;
-		Tile startTile = GameManager.gm.figureManager.FigurePosition (figure);
+		Tile startTile = _tileArray[figure.ColIndex, figure.RowIndex];
 		figure.moveModel.HighlightMoves (figure, startTile);
 	}
 
 	public override bool HighlightTile (int rowIndex, int colIndex) {
 		if (isCoordinateOk (rowIndex, colIndex)) {
 			Tile tile = _tileArray [colIndex, rowIndex];
-			if (tile.type != TileType.Wall && !GameManager.gm.figureManager.isTileEmpty(tile)) {
+			Figure figureAtDest = GameManager.gm.figureManager.FigureOnTile (tile);
+			if (figureAtDest != null && figureAtDest.isEnemy ()) {
+				tile.HighlightAttack ();
+				tile.possibleMove = true;
+				return true;
+			} else if (tile.type != TileType.Wall && GameManager.gm.figureManager.FigureOnTile (tile) == null) {
 				tile.Highlight ();
 				tile.possibleMove = true;
 				return true;
-			} else
+			} else {
 				return false;
+			}
 		} return false;
 	}
 
@@ -53,7 +59,7 @@ public sealed class PrototypeBoard : Board {
 		for (int rowIndex = 0; rowIndex < dimension; rowIndex++) {
 			GameObject container = new GameObject();
 			container.name = "Row " + rowIndex;
-			container.transform.SetParent (tileContainer.transform);
+			container.transform.SetParent (tileObjectsContainer.transform);
 			for (int colIndex = 0; colIndex < dimension; colIndex++) {
 				Tile tile;
 				if ((rowIndex + colIndex) % 2 == 0) {

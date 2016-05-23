@@ -26,9 +26,16 @@ public class Figure : MonoBehaviour {
 		GameManager.gm.board.HighlightPossibleMoves (this);
 	}
 
-	/* ---------- Interface ---------- */
+	/* --------------- Interface --------------- */
 
-	/* ---------- Other methods ---------- */
+	public bool isEnemy () {
+		if (side != GameManager.gm.currentPlayer) {
+			return true;
+		} else
+			return false;
+	}
+
+	/* ------------- Other methods ------------- */
 
 	void UpdatePosition () {
 		RowIndex = (int) this.transform.position.x;

@@ -2,13 +2,15 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
+public sealed class GameManager : MonoBehaviour {
 
 	[HideInInspector]
+	public FigureManager figureManager;
+	[HideInInspector]
 	public static GameManager gm;
+
 	public Board board;
 	public Text playerTurn;
-	public FigureManager figureManager;
 	public Side currentPlayer { get; private set;}
 
 	/* ---------- MonoBehavior methods ---------- */

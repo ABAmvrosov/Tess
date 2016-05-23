@@ -3,7 +3,7 @@
 	private int[,] bonusMoves = {{0,2},{0,-2},{2,0},{-2,0}};
 
 	public override void HighlightMoves (Figure figure, Tile tile) {
-		if (tile.GetCellSide () != figure.side) {
+		if (tile.GetTileSide () != figure.side) {
 			DefaultMoves (figure);
 		} else {
 			BonusMoves (figure);

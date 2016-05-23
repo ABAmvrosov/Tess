@@ -30,21 +30,22 @@ public sealed class PrototypeBoard : Board {
 	}
 
 	public override bool HighlightTile (int rowIndex, int colIndex) {
-		if (isCoordinateOk (rowIndex, colIndex)) {
-			Tile tile = _tileArray [colIndex, rowIndex];
-			Figure figureAtDest = GameManager.gm.figureManager.FigureOnTile (tile);
+		Tile tile = GetTile(rowIndex, colIndex);
+		if (tile != null && tile.type != TileType.Wall) {			
+			Figure figureAtDest = tile.figure;
 			if (figureAtDest != null && figureAtDest.isEnemy ()) {
 				tile.HighlightAttack ();
 				tile.possibleMove = true;
 				return true;
-			} else if (tile.type != TileType.Wall && GameManager.gm.figureManager.FigureOnTile (tile) == null) {
+			} else if (figureAtDest == null) {
 				tile.Highlight ();
 				tile.possibleMove = true;
 				return true;
 			} else {
 				return false;
 			}
-		} return false;
+		} 
+		return false;
 	}
 
 	/* ------------- Other methods ------------- */
@@ -52,6 +53,16 @@ public sealed class PrototypeBoard : Board {
 	protected override void InitializeBoard() {
 		BuildBoard (dimension);
 		GameManager.gm.figureManager.ChangeActiveSide ();
+	}
+
+	protected override void AddFigure (FigureType figureType, Side side, int rowIndex, int colIndex) {
+		GameObject figure = figureFactory.GetFigure (figureType, side) as GameObject;
+		figure.transform.position = new Vector3 (colIndex, rowIndex, -0.1f);
+		GameManager.gm.figureManager.RegisterFigure (figure, side, _tileArray[rowIndex, colIndex]);
+	}
+
+	protected override bool isCoordinateOk (int rowIndex, int colIndex) {
+		return !((rowIndex < 0) | (rowIndex > dimension - 1) | (colIndex < 0) | (colIndex > dimension - 1));
 	}
 
 	private void BuildBoard(int dimension) {
@@ -77,7 +88,7 @@ public sealed class PrototypeBoard : Board {
 		for (int i = 0; i < wallsCoordinates.GetLength(0); i++) {
 			tileFactory.SetTileType(_tileArray[wallsCoordinates[i, 0], wallsCoordinates[i, 1]], TileType.Wall);
 		}
-
+		// Black Figures
 		AddFigure (FigureType.Pawn, Side.Black, 1, 4);
 		AddFigure (FigureType.Pawn, Side.Black, 1, 5);
 		AddFigure (FigureType.Knight, Side.Black, 0, 3);
@@ -87,6 +98,7 @@ public sealed class PrototypeBoard : Board {
 		AddFigure (FigureType.Bishop, Side.Black, 0, 7);
 		AddFigure (FigureType.Rook, Side.Black, 0, 8);
 
+		// White Figures
 		AddFigure (FigureType.Pawn, Side.White, 8, 4);
 		AddFigure (FigureType.Pawn, Side.White, 8, 5);
 		AddFigure (FigureType.Knight, Side.White, 9, 6);
@@ -95,15 +107,6 @@ public sealed class PrototypeBoard : Board {
 		AddFigure (FigureType.Knight, Side.White, 9, 3);
 		AddFigure (FigureType.Bishop, Side.White, 9, 2);
 		AddFigure (FigureType.Rook, Side.White, 9, 1);
-	}
-
-	protected override void AddFigure (FigureType figureType, Side side, int rowIndex, int colIndex) {
-		GameObject figure = figureFactory.GetFigure (figureType, side) as GameObject;
-		figure.transform.position = new Vector3 (colIndex, rowIndex, -0.1f);
-		GameManager.gm.figureManager.RegisterFigure (figure, side, _tileArray[rowIndex, colIndex]);
-	}
-
-	protected override bool isCoordinateOk (int rowIndex, int colIndex) {
-		return !((rowIndex < 0) | (rowIndex > dimension - 1) | (colIndex < 0) | (colIndex > dimension - 1));
+		EventManager.GameStarted ();
 	}
 }

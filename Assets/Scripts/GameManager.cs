@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public sealed class GameManager : MonoBehaviour {
-
-	[HideInInspector]
-	public FigureManager figureManager;
+	
+	public FigureManager figureManager { get; private set;}
 	[HideInInspector]
 	public static GameManager gm;
 
 	public Board board;
 	public Text playerTurn;
+	public GameObject gameOverScreen;
+	public Text winText;
 	public Side currentPlayer { get; private set;}
 
 	/* ---------- MonoBehavior methods ---------- */
@@ -22,10 +24,15 @@ public sealed class GameManager : MonoBehaviour {
 			figureManager = this.GetComponent<FigureManager> ();
 		currentPlayer = Side.White;
 		EventManager.OnFigureMove += EndTurn;
+		EventManager.KingDead += GameOver;
 	}
 
 
 	/* --------------- Interface --------------- */
+
+	public void PlayAgain() {
+		SceneManager.LoadScene ("prototype"); 
+	}
 
 	/* ------------- Other methods ------------- */
 
@@ -37,5 +44,10 @@ public sealed class GameManager : MonoBehaviour {
 			currentPlayer = Side.White;
 			playerTurn.text = "Player 1 - White";
 		}
+	}
+
+	void GameOver () {
+		winText.text = playerTurn.text + " WIN";
+		gameOverScreen.SetActive (true);
 	}
 }

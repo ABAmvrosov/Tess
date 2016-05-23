@@ -6,8 +6,6 @@ public sealed class FigureManager : MonoBehaviour {
 	
 	[HideInInspector]
 	public Figure selectedFigure;
-	[HideInInspector]
-	public Dictionary<Tile, Figure> figuresOnBoard = new Dictionary<Tile, Figure>();
 
 	private List<GameObject> whiteFigures = new List<GameObject>();
 	private List<GameObject> blackFigures = new List<GameObject>();
@@ -31,30 +29,30 @@ public sealed class FigureManager : MonoBehaviour {
 	}
 
 	public void RegisterFigure (GameObject figure, Side side, Tile tile) {
-		figuresOnBoard.Add (tile, figure.GetComponent<Figure> ());
+		tile.figure = figure.GetComponent<Figure> ();
 		if (side == Side.Black)
 			blackFigures.Add (figure);
 		else
 			whiteFigures.Add (figure);
 	}
 
-	public Figure FigureOnTile (Tile tile) {
-		Figure figure = null;
-		figuresOnBoard.TryGetValue(tile, out figure);
-		return figure;
-	}
-
 	public void MoveFigure (Tile destination) {
-		Tile startTile = GameManager.gm.board.GetTile(selectedFigure.RowIndex, selectedFigure.ColIndex);
-		figuresOnBoard.Remove (startTile);
-		figuresOnBoard.Add (destination, selectedFigure);
-		selectedFigure.transform.SetParent (destination.transform);
-		selectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
-		EventManager.OnFigureMove ();
-	}
-
-	public void AttackFigure (Tile destination) {
-		
+		if (destination.figure != null && destination.figure.isEnemy ()) {
+			Debug.Log ("Attack");
+			Tile startTile = GameManager.gm.board.GetTile (selectedFigure.RowIndex, selectedFigure.ColIndex);
+			startTile.figure = null;
+			DestroyFigure (destination.figure);
+			destination.figure = selectedFigure;
+			selectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
+			EventManager.OnFigureMove ();
+		} else {
+			Debug.Log ("Move");
+			Tile startTile = GameManager.gm.board.GetTile (selectedFigure.RowIndex, selectedFigure.ColIndex);
+			startTile.figure = null;
+			destination.figure = selectedFigure;
+			selectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
+			EventManager.OnFigureMove ();
+		} 
 	}
 
 	/* ------------- Other methods ------------- */
@@ -65,5 +63,15 @@ public sealed class FigureManager : MonoBehaviour {
 
 	private void DeactivateCollider (GameObject figure) {
 		figure.GetComponent<BoxCollider2D> ().enabled = false;
+	}
+
+	private void DestroyFigure (Figure figure) {
+		if (figure.side == Side.Black) {
+			blackFigures.Remove (figure.gameObject);
+			Destroy (figure.gameObject);
+		} else {
+			whiteFigures.Remove (figure.gameObject);
+			Destroy (figure.gameObject);
+		}
 	}
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour {
 	
@@ -46,7 +47,7 @@ public class MainMenuManager : MonoBehaviour {
 
 	public void loadLevel(string leveltoLoad)
 	{
-		Application.LoadLevel (leveltoLoad);
+		SceneManager.LoadScene(leveltoLoad);
 	}
 
 	public void QuitGame()

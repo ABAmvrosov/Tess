@@ -47,7 +47,7 @@ public class Tile : MonoBehaviour {
 		_spriteRenderer.color = Color.white;
 	}
 
-	public Side GetCellSide () {
+	public Side GetTileSide () {
 		switch (this.type) {
 		case TileType.Black:
 			return Side.Black;

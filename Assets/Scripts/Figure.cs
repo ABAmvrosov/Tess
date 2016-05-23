@@ -17,13 +17,17 @@ public class Figure : MonoBehaviour {
 
 	/* ---------- MonoBehavior methods ---------- */
 
-	void Start() {
-		UpdatePosition ();
+	void Awake() {
+		EventManager.GameStarted += UpdatePosition;
 		EventManager.OnFigureMove += UpdatePosition;
 	}
 
 	void OnMouseDown () {		
 		GameManager.gm.board.HighlightPossibleMoves (this);
+	}
+
+	void OnDestroy () {
+		EventManager.OnFigureMove -= UpdatePosition;
 	}
 
 	/* --------------- Interface --------------- */
@@ -37,7 +41,7 @@ public class Figure : MonoBehaviour {
 
 	/* ------------- Other methods ------------- */
 
-	void UpdatePosition () {
+	protected void UpdatePosition () {
 		RowIndex = (int) this.transform.position.x;
 		ColIndex = (int) this.transform.position.y;
 	}

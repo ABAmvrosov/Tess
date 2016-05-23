@@ -1,13 +1,22 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MoveModels\PawnMoveModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\PrototypeBoard.cs" Line="13" Column="50" />
-      <File FileName="Assets\Scripts\FigureManager.cs" Line="32" Column="61" />
-      <File FileName="Assets\Scripts\Board.cs" Line="19" Column="17" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="26" Column="49" />
-      <File FileName="Assets\Scripts\Tile.cs" Line="35" Column="49" />
-      <File FileName="Assets\Scripts\MoveModels\PawnMoveModel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="45" Column="3" />
+      <File FileName="Assets\Scripts\Figure.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PrototypeBoard.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\FigureManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Board.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Tile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MoveModels\QueenMoveModel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EventManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\FigureFactory.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Figures\King.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Figures\Bishop.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Figures\Knight.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Figures\Pawn.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Figures\Queen.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Figures\Rook.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

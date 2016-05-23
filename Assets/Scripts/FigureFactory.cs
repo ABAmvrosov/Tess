@@ -17,64 +17,64 @@ public class FigureFactory : MonoBehaviour {
 	}
 
 	void ConfigureBlack (FigureType figureType, GameObject figure) {
-		Figure figureComponent = figure.AddComponent<Figure> ();
-		figureComponent.side = Side.Black;
+		Figure figureComponent = null;
 		switch (figureType) {
 		case FigureType.Pawn:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Pawn");
-			figureComponent.moveModel = new PawnMoveModel ();
+			figureComponent = figure.AddComponent<Pawn> ();
 			break;
 		case FigureType.Bishop:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Bishop");
-			figureComponent.moveModel = new BishopMoveModel ();
+			figureComponent = figure.AddComponent<Bishop> ();
 			break;
 		case FigureType.Rook:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Rook");
-			figureComponent.moveModel = new RookMoveModel ();
+			figureComponent = figure.AddComponent<Rook> ();
 			break;
 		case FigureType.King:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/King");
-			figureComponent.moveModel = new KingMoveModel ();
+			figureComponent = figure.AddComponent<King> ();
 			break;
 		case FigureType.Knight:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Knight");
-			figureComponent.moveModel = new KnightMoveModel ();
+			figureComponent = figure.AddComponent<Knight> ();
 			break;
 		case FigureType.Queen:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/Black/Queen");
-			figureComponent.moveModel = new QueenMoveModel ();
+			figureComponent = figure.AddComponent<Queen> ();
 			break;
 		}
+		figureComponent.side = Side.Black;
 	}
 
 	void ConfigureWhite (FigureType figureType, GameObject figure) {
-		Figure figureComponent = figure.AddComponent<Figure> ();
-		figureComponent.side = Side.White;
+		Figure figureComponent = null;
 		switch (figureType) {
 		case FigureType.Pawn:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Pawn");
-			figureComponent.moveModel = new PawnMoveModel ();
+			figureComponent = figure.AddComponent<Pawn> ();
 			break;
 		case FigureType.Bishop:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Bishop");
-			figureComponent.moveModel = new BishopMoveModel ();
+			figureComponent = figure.AddComponent<Bishop> ();
 			break;
 		case FigureType.Rook:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Rook");
-			figureComponent.moveModel = new RookMoveModel ();
+			figureComponent = figure.AddComponent<Rook> ();
 			break;
 		case FigureType.King:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/King");
-			figureComponent.moveModel = new KingMoveModel ();
+			figureComponent = figure.AddComponent<King> ();
 			break;
 		case FigureType.Knight:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Knight");
-			figureComponent.moveModel = new KnightMoveModel ();
+			figureComponent = figure.AddComponent<Knight> ();
 			break;
 		case FigureType.Queen:
 			figure.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Figures/White/Queen");
-			figureComponent.moveModel = new QueenMoveModel ();
+			figureComponent = figure.AddComponent<Queen> ();
 			break;
 		}
+		figureComponent.side = Side.White;
 	}
 }

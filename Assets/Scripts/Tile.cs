@@ -3,15 +3,29 @@ using System.Collections;
 
 public class Tile : MonoBehaviour {
 	
-	public bool PossibleMove { get; set; }
-	public TileType Type;
-	public Figure Figure;
-	private SpriteRenderer spriteRenderer;
+	public bool PossibleMove { 
+		get { return _possibleMove; } 
+		set { _possibleMove = value; } 
+	}
+	public TileType Type {
+		get { return _type; }
+		set { _type = value; }
+	}
+	public Figure Figure {
+		get { return _figure; }
+		set { _figure = value; }
+	}
+
+	private bool _possibleMove;
+	private TileType _type;
+	private Figure _figure;
+
+	private SpriteRenderer _spriteRenderer;
 
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Awake () {
-		spriteRenderer = GetComponent<SpriteRenderer> ();
+		_spriteRenderer = GetComponent<SpriteRenderer> ();
 		EventManager.OnFigureMove += OnFigureMove;
 	}
 
@@ -36,15 +50,15 @@ public class Tile : MonoBehaviour {
 	/* --------------- Interface --------------- */
 
 	public void Highlight () {
-		spriteRenderer.color = Color.green;
+		_spriteRenderer.color = Color.green;
 	}
 
 	public void HighlightAttack () {
-		spriteRenderer.color = Color.red;
+		_spriteRenderer.color = Color.red;
 	}
 
 	public void UnHighlight () {
-		spriteRenderer.color = Color.white;
+		_spriteRenderer.color = Color.white;
 	}
 
 	public Side GetTileSide () {

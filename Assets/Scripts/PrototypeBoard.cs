@@ -69,7 +69,7 @@ public sealed class PrototypeBoard : Board {
 		for (int rowIndex = 0; rowIndex < dimension; rowIndex++) {
 			GameObject container = new GameObject();
 			container.name = "Row " + rowIndex;
-			container.transform.SetParent (tileObjectsContainer.transform);
+			container.transform.SetParent (_tileObjectsContainer.transform);
 			for (int colIndex = 0; colIndex < dimension; colIndex++) {
 				Tile tile;
 				if ((rowIndex + colIndex) % 2 == 0) {

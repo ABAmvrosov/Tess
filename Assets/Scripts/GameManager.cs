@@ -5,13 +5,26 @@ using UnityEngine.SceneManagement;
 
 public sealed class GameManager : MonoBehaviour {
 	
-	[HideInInspector]
-	public static GameManager GM;
+	[SerializeField]
+	private Text _playerTurnText;
+	[SerializeField]
+	private Text _winText;
+	[SerializeField]
+	private GameObject _gameOverScreen;
 
-	public Text PlayerTurnText;
-	public GameObject GameOverScreen;
-	public Text WinText;
-
+	public Text PlayerTurnText { 
+		get { return _playerTurnText; } 
+		private set { _playerTurnText = value; }
+	}
+	public Text WinText { 
+		get { return _winText; } 
+		private set { _winText = value; }
+	}
+	public GameObject GameOverScreen { 
+		get { return _gameOverScreen; } 
+		private set { _gameOverScreen = value; }
+	}
+	public static GameManager GM { get; private set;}
 	public Board GameBoard { get; private set;}
 	public FigureManager FigureManager { get; private set;}
 	public Side CurrentPlayer { get; private set;}

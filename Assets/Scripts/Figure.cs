@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Figure : MonoBehaviour {
 
-	public Side FigureSide;
-	public MoveModel FigureMoveModel;
+	public Side FigureSide { get; set; }
+	public MoveModel FigureMoveModel { get; set; }
 	public int RowIndex {
 		get;
 		private set;
@@ -22,8 +22,10 @@ public class Figure : MonoBehaviour {
 		EventManager.OnFigureMove += UpdatePosition;
 	}
 
-	void OnMouseDown () {		
-		GameManager.GM.GameBoard.HighlightPossibleMoves (this);
+	void OnMouseDown () {
+		if (GameManager.GM.CurrentPlayer == FigureSide) {
+			GameManager.GM.GameBoard.HighlightPossibleMoves (this);
+		}
 	}
 
 	void OnDestroy () {

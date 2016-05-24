@@ -5,11 +5,12 @@ using System.Collections.Generic;
 public abstract class Board : MonoBehaviour {
 
 	[SerializeField]
-	protected GameObject tileObjectsContainer;
+	protected GameObject _tileObjectsContainer;
+
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Start() {
-		if (tileObjectsContainer == null)
+		if (_tileObjectsContainer == null)
 			Debug.LogWarning ("Tile Objects Container not specified");
 		InitializeBoard ();
 	}

@@ -7,17 +7,17 @@ public sealed class FigureManager : MonoBehaviour {
 	[HideInInspector]
 	public Figure SelectedFigure;
 
-	private List<GameObject> whiteFigures = new List<GameObject>();
-	private List<GameObject> blackFigures = new List<GameObject>();
+	private List<GameObject> _whiteFigures = new List<GameObject>();
+	private List<GameObject> _blackFigures = new List<GameObject>();
 
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Awake () {
-		EventManager.GameStarted += ChangeActiveSide;
+//		EventManager.GameStarted += ChangeActiveSide;
 	}
 
 	void Start () {
-		EventManager.OnFigureMove += ChangeActiveSide;
+//		EventManager.OnFigureMove += ChangeActiveSide;
 	}
 
 	/* --------------- Interface --------------- */
@@ -25,9 +25,9 @@ public sealed class FigureManager : MonoBehaviour {
 	public void RegisterFigure (GameObject figureObject, Side figureSide, Tile tile) {
 		tile.Figure = figureObject.GetComponent<Figure> ();
 		if (figureSide == Side.Black)
-			blackFigures.Add (figureObject);
+			_blackFigures.Add (figureObject);
 		else
-			whiteFigures.Add (figureObject);
+			_whiteFigures.Add (figureObject);
 	}
 
 	public void Move (Tile destination) {
@@ -52,30 +52,30 @@ public sealed class FigureManager : MonoBehaviour {
 		EventManager.OnFigureMove ();
 	}
 
-	private void ChangeActiveSide () {
-		if (GameManager.GM.CurrentPlayer == Side.White) {
-			whiteFigures.ForEach (ActivateCollider);
-			blackFigures.ForEach (DeactivateCollider);
-		} else if (GameManager.GM.CurrentPlayer == Side.Black) {
-			whiteFigures.ForEach (DeactivateCollider);
-			blackFigures.ForEach (ActivateCollider);
-		}
-	}
+//	private void ChangeActiveSide () {
+//		if (GameManager.GM.CurrentPlayer == Side.White) {
+//			_whiteFigures.ForEach (ActivateCollider);
+//			_blackFigures.ForEach (DeactivateCollider);
+//		} else if (GameManager.GM.CurrentPlayer == Side.Black) {
+//			_whiteFigures.ForEach (DeactivateCollider);
+//			_blackFigures.ForEach (ActivateCollider);
+//		}
+//	}
 
-	private void ActivateCollider (GameObject figureObject) {
-		figureObject.GetComponent<BoxCollider2D> ().enabled = true;
-	}
-
-	private void DeactivateCollider (GameObject figureObject) {
-		figureObject.GetComponent<BoxCollider2D> ().enabled = false;
-	}
+//	private void ActivateCollider (GameObject figureObject) {
+//		figureObject.GetComponent<BoxCollider2D> ().enabled = true;
+//	}
+//
+//	private void DeactivateCollider (GameObject figureObject) {
+//		figureObject.GetComponent<BoxCollider2D> ().enabled = false;
+//	}
 
 	private void DestroyFigure (Figure figure) {
 		if (figure.FigureSide == Side.Black) {
-			blackFigures.Remove (figure.gameObject);
+			_blackFigures.Remove (figure.gameObject);
 			Destroy (figure.gameObject);
 		} else {
-			whiteFigures.Remove (figure.gameObject);
+			_whiteFigures.Remove (figure.gameObject);
 			Destroy (figure.gameObject);
 		}
 	}

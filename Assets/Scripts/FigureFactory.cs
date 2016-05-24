@@ -1,19 +1,61 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class FigureFactory : MonoBehaviour {
 
-	public GameObject FigurePrefab;
-	public GameObject FigureObjectsContainer;
+	[SerializeField]
+	private GameObject _figurePrefab;
+	[SerializeField]
+	private GameObject _figureObjectsContainer;
+	[SerializeField]
+	private int _figurePoolSize = 20;
+
+	public GameObject FigurePrefab {
+		get { return _figurePrefab; }
+		set { _figurePrefab = value; }
+	}
+	public GameObject FigureObjectsContainer {
+		get { return _figureObjectsContainer; }
+		set { _figureObjectsContainer = value; }
+	}
+
+	private Stack<GameObject> _figurePool;
+
+	/* ---------- MonoBehavior methods ---------- */
+
+	void Awake () {
+		FigurePoolInit ();
+	}
+
+	/* --------------- Interface --------------- */
 
 	public GameObject GetFigure (FigureType figureType, Side figureSide) {
-		GameObject figure = Instantiate (FigurePrefab) as GameObject;
-		figure.transform.SetParent (FigureObjectsContainer.transform);
+		GameObject figureObject = null;
+		if (_figurePool.Count != 0) {
+			figureObject = _figurePool.Pop();
+		} else {
+			figureObject = Instantiate (FigurePrefab) as GameObject;
+			figureObject.transform.SetParent (FigureObjectsContainer.transform);
+		}
 		if (figureSide == Side.Black) 
-			ConfigureBlack (figureType, figure);
+			ConfigureBlack (figureType, figureObject);
 		else
-			ConfigureWhite (figureType, figure);
-		return figure;
+			ConfigureWhite (figureType, figureObject);
+		return figureObject;
+	}
+
+	/* ------------- Other methods ------------- */
+
+	void FigurePoolInit () {
+		_figurePool = new Stack<GameObject> (_figurePoolSize);
+		GameObject figureObject;
+		for (int i = 0; i < _figurePoolSize; i++) {
+			figureObject = Instantiate (FigurePrefab) as GameObject;
+			figureObject.transform.SetParent (FigureObjectsContainer.transform);
+			_figurePool.Push (figureObject);
+		}
 	}
 
 	void ConfigureBlack (FigureType figureType, GameObject figureObject) {

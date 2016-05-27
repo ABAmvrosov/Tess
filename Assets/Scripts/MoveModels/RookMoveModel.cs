@@ -1,27 +1,15 @@
 ﻿public class RookMoveModel : MoveModel {
-	private int[,] moves = {{0,1},{0,-1},{1,0},{-1,0}};
-//	private int[,] bonusMoves = {};
+	private int[,] _defaultMoves = {{0,1},{0,-1},{1,0},{-1,0}};
+	private int[,] _bonusMoves = {{0,1},{0,-1},{1,0},{-1,0}}; // = _defaultMoves
 
-	public override void HighlightMoves (Figure figure, Tile tile) {
-		if (tile.GetTileSide () != figure.FigureSide) {
-			DefaultMoves (figure);
-		} else {
-			BonusMoves (figure);
-		}
+	public RookMoveModel () {
+		IsFixedMoveModel = false;
 	}
 
-	protected override void DefaultMoves (Figure figure) {
-		for (int i = 0; i < moves.GetLength (0); i++) {
-			int x = (int) figure.transform.position.x; 
-			int y = (int) figure.transform.position.y;
-			while (GameManager.GM.GameBoard.HighlightTile (x + moves[i, 0], y + moves [i, 1])) {
-				x += moves [i, 0];
-				y += moves [i, 1];
-			}
-		}
-	}
-
-	protected override void BonusMoves (Figure figure) {
-		DefaultMoves (figure);
+	public override int[,] GetModel (bool isBonusMoves) {
+		if (isBonusMoves) {
+			return _bonusMoves;
+		} else
+			return _defaultMoves;
 	}
 }

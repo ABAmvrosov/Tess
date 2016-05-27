@@ -26,7 +26,7 @@ public class Tile : MonoBehaviour {
 
 	void Awake () {
 		_spriteRenderer = GetComponent<SpriteRenderer> ();
-		EventManager.OnFigureMove += OnFigureMove;
+		Messenger.AddListener ("NextTurn", OnFigureMove);
 	}
 
 	void OnMouseOver () {
@@ -37,7 +37,7 @@ public class Tile : MonoBehaviour {
 
 	void OnMouseDown () {
 		if (PossibleMove) {
-			GameManager.GM.FigureManager.Move (this);
+			GameManager.GM.GameBoard.FigureManager.Move (this);
 		}
 	}
 

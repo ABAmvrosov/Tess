@@ -17,19 +17,21 @@ public class Figure : MonoBehaviour {
 
 	/* ---------- MonoBehavior methods ---------- */
 
-	void Awake() {
-		EventManager.GameStarted += UpdatePosition;
-		EventManager.OnFigureMove += UpdatePosition;
+	void OnEnable() {
+		Messenger.AddListener ("NextTurn", UpdatePosition);
 	}
 
 	void OnMouseDown () {
 		if (GameManager.GM.CurrentPlayer == FigureSide) {
 			GameManager.GM.GameBoard.HighlightPossibleMoves (this);
+		} else if (GameManager.GM.GameBoard.GetTile(RowIndex, ColIndex).PossibleMove) {
+			GameManager.GM.GameBoard.FigureManager.Move (GameManager.GM.GameBoard.GetTile(RowIndex, ColIndex));
 		}
 	}
 
-	void OnDestroy () {
-		EventManager.OnFigureMove -= UpdatePosition;
+	void OnDisable () {
+		Messenger.RemoveListener ("NextTurn", UpdatePosition);
+		Messenger<GameObject>.Broadcast ("KillFigure", this.gameObject);
 	}
 
 	/* --------------- Interface --------------- */

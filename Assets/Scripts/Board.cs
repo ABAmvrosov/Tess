@@ -4,14 +4,16 @@ using System.Collections.Generic;
 
 public abstract class Board : MonoBehaviour {
 
-	[SerializeField]
-	protected GameObject _tileObjectsContainer;
+	[SerializeField] protected GameObject _tileObjectsContainer;
+	public FigureManager FigureManager { get; private set;}
 
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Start() {
 		if (_tileObjectsContainer == null)
-			Debug.LogWarning ("Tile Objects Container not specified");
+			Debug.LogWarning ("Tile Objects Container not specified.");
+		if (FigureManager == null) 
+			FigureManager = this.GetComponent<FigureManager> ();
 		InitializeBoard ();
 	}
 

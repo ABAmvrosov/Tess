@@ -5,13 +5,11 @@ using UnityEngine.SceneManagement;
 
 public sealed class GameManager : MonoBehaviour {
 	
-	[SerializeField]
-	private Text _playerTurnText;
-	[SerializeField]
-	private Text _winText;
-	[SerializeField]
-	private GameObject _gameOverScreen;
+	[SerializeField] private Text _playerTurnText;
+	[SerializeField] private Text _winText;
+	[SerializeField] private GameObject _gameOverScreen;
 
+	public static GameManager GM { get; private set;}
 	public Text PlayerTurnText { 
 		get { return _playerTurnText; } 
 		private set { _playerTurnText = value; }
@@ -24,9 +22,7 @@ public sealed class GameManager : MonoBehaviour {
 		get { return _gameOverScreen; } 
 		private set { _gameOverScreen = value; }
 	}
-	public static GameManager GM { get; private set;}
 	public Board GameBoard { get; private set;}
-	public FigureManager FigureManager { get; private set;}
 	public Side CurrentPlayer { get; private set;}
 
 	/* ---------- MonoBehavior methods ---------- */
@@ -34,19 +30,17 @@ public sealed class GameManager : MonoBehaviour {
 	void Awake () {
 		if (GM == null)
 			GM = this.GetComponent<GameManager> ();
-		if (FigureManager == null)
-			FigureManager = this.GetComponent<FigureManager> ();
-		if (GameBoard == null)
-			GameBoard = GameObject.FindGameObjectWithTag ("Board").GetComponent<Board> ();
+		if (GameBoard == null) 
+			GameBoard = GameObject.FindGameObjectWithTag ("Board").GetComponent<Board> ();		
 		if (PlayerTurnText == null)
-			Debug.LogError ("Player turn text not specified");
+			Debug.LogError ("Player turn text not specified.");
 		if (GameOverScreen == null)
-			Debug.LogError ("GameOverScreen object not specified");
+			Debug.LogError ("GameOverScreen object not specified.");
 		if (WinText == null)
-			Debug.LogError ("Win text not specified");
-		CurrentPlayer = Side.White;
-		EventManager.OnFigureMove += EndTurn;
-		EventManager.KingDead += EndGame;
+			Debug.LogError ("Win text not specified.");
+		CurrentPlayer = Side.Black;
+		Messenger.AddListener ("NextTurn", EndTurn);
+		Messenger.AddListener ("KingDead", EndGame);
 	}
 
 
@@ -69,6 +63,7 @@ public sealed class GameManager : MonoBehaviour {
 	}
 
 	void EndGame () {
+		Debug.Log ("EndGame");
 		WinText.text = PlayerTurnText.text + " WIN";
 		GameOverScreen.SetActive (true);
 	}

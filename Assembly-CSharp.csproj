@@ -47,7 +47,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Board.cs" />
      <Compile Include="Assets\Scripts\Enums.cs" />
-     <Compile Include="Assets\Scripts\EventManager.cs" />
      <Compile Include="Assets\Scripts\Figure.cs" />
      <Compile Include="Assets\Scripts\FigureFactory.cs" />
      <Compile Include="Assets\Scripts\FigureManager.cs" />
@@ -59,6 +58,7 @@
      <Compile Include="Assets\Scripts\Figures\Rook.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MainMenuManager.cs" />
+     <Compile Include="Assets\Scripts\Messenger.cs" />
      <Compile Include="Assets\Scripts\MoveModel.cs" />
      <Compile Include="Assets\Scripts\MoveModels\BishopMoveModel.cs" />
      <Compile Include="Assets\Scripts\MoveModels\KingMoveModel.cs" />

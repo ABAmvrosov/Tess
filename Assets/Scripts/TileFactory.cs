@@ -3,8 +3,7 @@ using System.Collections;
 
 public class TileFactory : MonoBehaviour {
 
-	[SerializeField]
-	private Tile tilePrefab;
+	[SerializeField] private Tile tilePrefab;
 
 	public Tile GetWallTile() {
 		Tile tile = Instantiate (tilePrefab);

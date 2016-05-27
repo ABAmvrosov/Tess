@@ -6,8 +6,9 @@ public class King : Figure {
 		FigureMoveModel = new KingMoveModel ();
 	}
 
-	void OnDestroy () {
-		Debug.Log ("King dead");
-		EventManager.KingDead ();
+	void OnDisable () {
+//		Debug.Log ("King dead");
+		if (GameManager.GM)
+			Messenger.Broadcast ("KingDead");
 	}
 }

@@ -5,12 +5,9 @@ using System.Collections.Generic;
 
 public class FigureFactory : MonoBehaviour {
 
-	[SerializeField]
-	private GameObject _figurePrefab;
-	[SerializeField]
-	private GameObject _figureObjectsContainer;
-	[SerializeField]
-	private int _figurePoolSize = 20;
+	[SerializeField] private GameObject _figurePrefab;
+	[SerializeField] private GameObject _figureObjectsContainer;
+	[SerializeField] private int _figurePoolSize = 20;
 
 	public GameObject FigurePrefab {
 		get { return _figurePrefab; }
@@ -21,20 +18,21 @@ public class FigureFactory : MonoBehaviour {
 		set { _figureObjectsContainer = value; }
 	}
 
-	private Stack<GameObject> _figurePool;
+	private Stack<GameObject> figurePool;
 
 	/* ---------- MonoBehavior methods ---------- */
 
 	void Awake () {
 		FigurePoolInit ();
+		Messenger<GameObject>.AddListener ("KillFigure", ReturnToPool);
 	}
 
 	/* --------------- Interface --------------- */
 
 	public GameObject GetFigure (FigureType figureType, Side figureSide) {
 		GameObject figureObject = null;
-		if (_figurePool.Count != 0) {
-			figureObject = _figurePool.Pop();
+		if (figurePool.Count != 0) {
+			figureObject = figurePool.Pop();
 		} else {
 			figureObject = Instantiate (FigurePrefab) as GameObject;
 			figureObject.transform.SetParent (FigureObjectsContainer.transform);
@@ -48,13 +46,17 @@ public class FigureFactory : MonoBehaviour {
 
 	/* ------------- Other methods ------------- */
 
+	void ReturnToPool (GameObject figureObject) {
+		figurePool.Push (figureObject);
+	}
+
 	void FigurePoolInit () {
-		_figurePool = new Stack<GameObject> (_figurePoolSize);
+		figurePool = new Stack<GameObject> (_figurePoolSize);
 		GameObject figureObject;
 		for (int i = 0; i < _figurePoolSize; i++) {
 			figureObject = Instantiate (FigurePrefab) as GameObject;
 			figureObject.transform.SetParent (FigureObjectsContainer.transform);
-			_figurePool.Push (figureObject);
+			figurePool.Push (figureObject);
 		}
 	}
 

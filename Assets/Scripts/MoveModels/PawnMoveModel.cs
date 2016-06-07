@@ -5,7 +5,7 @@
 	private int[,] _bonusMoves = {{0,1},{0,-1},{1,0},{-1,0}, {0,2},{0,-2},{2,0},{-2,0}};
 
 	public PawnMoveModel () {
-		IsFixedMoveModel = true;
+		IsFixed = true;
 	}
 
 	public override int[,] GetModel (bool isBonusMoves) {

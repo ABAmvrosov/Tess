@@ -4,18 +4,20 @@ using System.Collections;
 public class Figure : MonoBehaviour {
 
 	public Side FigureSide { get; set; }
-	public MoveModel FigureMoveModel { get; set; }
-	public int RowIndex {
+	public MoveModel MovementModel { get; set; }
+	public bool CanMove { 
+		get { return canMove; } 
+		set { canMove = value; }
+	}
+	private bool canMove = false;
+	public int horCoordinateX {
 		get;
 		private set;
 	}
-	public int ColIndex {
+	public int verCoordinateY {
 		get;
 		private set;
 	}
-
-
-	/* ---------- MonoBehavior methods ---------- */
 
 	void OnEnable() {
 		Messenger.AddListener ("NextTurn", UpdatePosition);
@@ -23,9 +25,9 @@ public class Figure : MonoBehaviour {
 
 	void OnMouseDown () {
 		if (GameManager.GM.CurrentPlayer == FigureSide) {
-			GameManager.GM.GameBoard.HighlightPossibleMoves (this);
-		} else if (GameManager.GM.GameBoard.GetTile(RowIndex, ColIndex).PossibleMove) {
-			GameManager.GM.GameBoard.FigureManager.Move (GameManager.GM.GameBoard.GetTile(RowIndex, ColIndex));
+			GameManager.ABoardController.HighlightPossibleMoves (this);
+		} else if (GameManager.ABoardController.GetTile(horCoordinateX, verCoordinateY).PossibleMove) {
+			GameManager.TheFigureManager.Move (GameManager.ABoardController.GetTile(horCoordinateX, verCoordinateY));
 		}
 	}
 
@@ -34,8 +36,6 @@ public class Figure : MonoBehaviour {
 		Messenger<GameObject>.Broadcast ("KillFigure", this.gameObject);
 	}
 
-	/* --------------- Interface --------------- */
-
 	public bool IsEnemy () {
 		if (FigureSide != GameManager.GM.CurrentPlayer) {
 			return true;
@@ -43,10 +43,8 @@ public class Figure : MonoBehaviour {
 			return false;
 	}
 
-	/* ------------- Other methods ------------- */
-
 	protected void UpdatePosition () {
-		RowIndex = (int) this.transform.position.x;
-		ColIndex = (int) this.transform.position.y;
+		horCoordinateX = (int) this.transform.position.x;
+		verCoordinateY = (int) this.transform.position.y;
 	}
 }

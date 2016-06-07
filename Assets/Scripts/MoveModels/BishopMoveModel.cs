@@ -3,7 +3,7 @@
 	private int[,] _bonusMoves = {{-1,1},{1,1},{1,-1},{-1,-1}}; // = _defaultMoves
 
 	public BishopMoveModel () {
-		IsFixedMoveModel = false;
+		IsFixed = false;
 	}
 
 	public override int[,] GetModel (bool isBonusMoves) {

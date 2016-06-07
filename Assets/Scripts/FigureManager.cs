@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public sealed class FigureManager : MonoBehaviour {
 	
 	[HideInInspector] public Figure SelectedFigure;
+	private List<Figure> figuresOnBoard = new List<Figure>();
 
-	/* ---------- MonoBehavior methods ---------- */
-
-
-	/* --------------- Interface --------------- */
-
-	public void RegisterFigure (GameObject figureObject, Tile tile) {
-		tile.Figure = figureObject.GetComponent<Figure> ();
+	public void RegisterFigure (Figure figure, Tile tile) {
+		tile.Figure = figure;
+		figuresOnBoard.Add (figure);
 	}
 
 	public void Move (Tile destination) {
@@ -27,10 +25,18 @@ public sealed class FigureManager : MonoBehaviour {
 		} 
 	}
 
-	/* ------------- Other methods ------------- */
+	public void ActivateFigures (MovementCard moveCard) {
+		List<Type> ableTypes = moveCard.AbleTypes;
+		foreach (Figure figure in figuresOnBoard) {
+			Type figureType = figure.GetType ();
+			if (ableTypes.Contains (figureType)) {
+				figure.gameObject.SetActive (true);
+			}
+		}
+	}
 
 	private void MoveFigure(Tile destination) {
-		Tile startTile = GameManager.GM.GameBoard.GetTile (SelectedFigure.RowIndex, SelectedFigure.ColIndex);
+		Tile startTile = GameManager.ABoardController.GetTile (SelectedFigure.horCoordinateX, SelectedFigure.verCoordinateY);
 		startTile.Figure = null;
 		destination.Figure = SelectedFigure;
 		SelectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
@@ -39,5 +45,6 @@ public sealed class FigureManager : MonoBehaviour {
 
 	private void DestroyFigure (Figure figure) {
 		figure.gameObject.SetActive (false);
+		figuresOnBoard.Remove (figure);
 	}
 }

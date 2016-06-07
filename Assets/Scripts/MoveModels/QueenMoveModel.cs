@@ -3,7 +3,7 @@
 	private int[,] _bonusMoves = {{-1,1},{1,1},{1,-1},{-1,-1},{0,1},{0,-1},{1,0},{-1,0}}; // = _defaultMoves
 
 	public QueenMoveModel () {
-		IsFixedMoveModel = false;
+		IsFixed = false;
 	}
 
 	public override int[,] GetModel (bool isBonusMoves) {

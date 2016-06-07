@@ -37,7 +37,7 @@ public class Tile : MonoBehaviour {
 
 	void OnMouseDown () {
 		if (PossibleMove) {
-			GameManager.GM.GameBoard.FigureManager.Move (this);
+			GameManager.TheFigureManager.Move (this);
 		}
 	}
 

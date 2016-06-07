@@ -3,7 +3,7 @@ using System.Collections;
 
 public class King : Figure {
 	void Start () {
-		FigureMoveModel = new KingMoveModel ();
+		MovementModel = new KingMoveModel ();
 	}
 
 	void OnDisable () {

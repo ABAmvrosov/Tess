@@ -3,6 +3,6 @@ using System.Collections;
 
 public class Queen : Figure {
 	void Start () {
-		FigureMoveModel = new QueenMoveModel ();
+		MovementModel = new QueenMoveModel ();
 	}
 }

@@ -33,7 +33,6 @@ public sealed class PrototypeBoard : Board {
 	private void ProceedRow (int verCoordinateY, int dimension) {
 		for (int horCoordinateX = 0; horCoordinateX < dimension; horCoordinateX++) {
 			Tile tile = CreateTile (horCoordinateX, verCoordinateY);
-			tile.name = "Tile [" +  horCoordinateX + ", " + verCoordinateY + "]";
 			_tileArray [horCoordinateX, verCoordinateY] = tile;
 		}
 	}
@@ -41,9 +40,9 @@ public sealed class PrototypeBoard : Board {
 	private Tile CreateTile (int verCoordinateX, int verCoordinateY) {
 		// Like chess board
 		if ((verCoordinateX + verCoordinateY) % 2 == 0) {
-			return _tileFactory.GetWhiteTile (verCoordinateX, verCoordinateY);
+            return _tileFactory.GetTile(TileType.White, verCoordinateX, verCoordinateY);
 		} else {
-			return _tileFactory.GetBlackTile (verCoordinateX, verCoordinateY);
+            return _tileFactory.GetTile(TileType.Black, verCoordinateX, verCoordinateY);
 		}
 	}
 

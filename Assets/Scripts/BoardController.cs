@@ -48,9 +48,8 @@ public class BoardController : MonoBehaviour {
 	public Tile GetTile (int horCoordinateX, int verCoordinateY) {
 		return _board.GetTile (horCoordinateX, verCoordinateY);
 	}
-
-	public void HighlightPossibleMoves (Figure figure) {
-		GameManager.TheFigureManager.SelectedFigure = figure;
+    
+    public void HighlightPossibleMoves (Figure figure) {
 		Tile startTile = GetTile(figure.horCoordinateX, figure.verCoordinateY);
 		bool bonusMoves = startTile.GetTileSide () == figure.FigureSide;
 		int[,] moves = figure.MovementModel.GetModel (bonusMoves);

@@ -21,9 +21,7 @@ public class Tile : MonoBehaviour {
 	private Figure _figure;
 
 	private SpriteRenderer _spriteRenderer;
-
-	/* ---------- MonoBehavior methods ---------- */
-
+    
 	void Awake () {
 		_spriteRenderer = GetComponent<SpriteRenderer> ();
 		Messenger.AddListener ("NextTurn", OnFigureMove);
@@ -36,9 +34,8 @@ public class Tile : MonoBehaviour {
 	}
 
 	void OnMouseDown () {
-		if (PossibleMove) {
-			GameManager.TheFigureManager.Move (this);
-		}
+        StateContext context = new StateContext(this, StateMark.MoveToTile);
+        GameManager.GM.HandleActionByState(context);			
 	}
 
 	void OnMouseExit () {
@@ -46,9 +43,7 @@ public class Tile : MonoBehaviour {
 			UnHighlight ();
 		}
 	}
-
-	/* --------------- Interface --------------- */
-
+    
 	public void Highlight () {
 		_spriteRenderer.color = Color.green;
 	}
@@ -71,9 +66,7 @@ public class Tile : MonoBehaviour {
 			return Side.Undefined;
 		}
 	}
-
-	/* ------------- Other methods ------------- */
-
+    
 	void OnFigureMove () {
 		if (PossibleMove) {
 			PossibleMove = false;

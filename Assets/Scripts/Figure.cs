@@ -4,32 +4,30 @@ using System.Collections;
 public class Figure : MonoBehaviour {
 
 	public Side FigureSide { get; set; }
+    public FigureType Type { get; set; }
 	public MoveModel MovementModel { get; set; }
 	public bool CanMove { 
-		get { return canMove; } 
-		set { canMove = value; }
-	}
-	private bool canMove = false;
-	public int horCoordinateX {
+		get { return _canMove; } 
+		set { _canMove = value; }
+    }
+    private bool _canMove = false;
+    public int horCoordinateX {
 		get;
 		private set;
 	}
 	public int verCoordinateY {
 		get;
 		private set;
-	}
+    }
 
-	void OnEnable() {
+    void OnEnable() {
 		Messenger.AddListener ("NextTurn", UpdatePosition);
 	}
 
 	void OnMouseDown () {
-		if (GameManager.GM.CurrentPlayer == FigureSide) {
-			GameManager.ABoardController.HighlightPossibleMoves (this);
-		} else if (GameManager.ABoardController.GetTile(horCoordinateX, verCoordinateY).PossibleMove) {
-			GameManager.TheFigureManager.Move (GameManager.ABoardController.GetTile(horCoordinateX, verCoordinateY));
-		}
-	}
+        StateContext context = new StateContext(this, StateMark.Figure);
+        GameManager.GM.HandleActionByState(context);
+    }
 
 	void OnDisable () {
 		Messenger.RemoveListener ("NextTurn", UpdatePosition);

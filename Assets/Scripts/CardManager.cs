@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CardManager : MonoBehaviour {
-	
+    public Card ActiveCard { get; set; }
 }

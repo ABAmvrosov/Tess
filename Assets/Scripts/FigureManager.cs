@@ -15,31 +15,30 @@ public sealed class FigureManager : MonoBehaviour {
 
 	public void Move (Tile destination) {
 		if (destination.Figure != null && destination.Figure.IsEnemy ()) {
-			Debug.Log ("Attack");
 			DestroyFigure (destination.Figure);
 			MoveFigure (destination);
 
 		} else {
-			Debug.Log ("Move");
 			MoveFigure (destination);
 		} 
 	}
 
 	public void ActivateFigures (MovementCard moveCard) {
-		List<Type> ableTypes = moveCard.AbleTypes;
+		List<FigureType> ableTypes = moveCard.AbleTypes;
 		foreach (Figure figure in figuresOnBoard) {
-			Type figureType = figure.GetType ();
-			if (ableTypes.Contains (figureType)) {
-				figure.gameObject.SetActive (true);
+            bool playerCanMoveIt = figure.FigureSide == GameManager.GM.CurrentPlayer;
+            if (ableTypes.Contains (figure.Type) && playerCanMoveIt) {
+				figure.CanMove = true;
 			}
 		}
 	}
 
 	private void MoveFigure(Tile destination) {
-		Tile startTile = GameManager.ABoardController.GetTile (SelectedFigure.horCoordinateX, SelectedFigure.verCoordinateY);
+		Tile startTile = GameManager.TheBoardController.GetTile (SelectedFigure.horCoordinateX, SelectedFigure.verCoordinateY);
 		startTile.Figure = null;
 		destination.Figure = SelectedFigure;
 		SelectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
+        SelectedFigure.CanMove = false;
 		Messenger.Broadcast ("NextTurn");
 	}
 

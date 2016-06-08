@@ -26,12 +26,13 @@ internal class MoveFigureState : State {
         }
         else {
             GameManager.GM.GameState = new ChooseCardState();
+            Messenger.Broadcast("NextTurn");
         }
         StateChanged();
     }
 
     private bool CanMoveAgain() {
         MovementCard card = (MovementCard)GameManager.TheCardManager.ActiveCard;
-        return card.NumberOfMoves > 0;
+        return --card.NumberOfMoves > 0;
     }
 }

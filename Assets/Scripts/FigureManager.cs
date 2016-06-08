@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public sealed class FigureManager : MonoBehaviour {
 	
@@ -23,7 +21,8 @@ public sealed class FigureManager : MonoBehaviour {
 		} 
 	}
 
-	public void ActivateFigures (MovementCard moveCard) {
+	public void ActivateFigures () {
+        MovementCard moveCard = (MovementCard)GameManager.TheCardManager.ActiveCard;
 		List<FigureType> ableTypes = moveCard.AbleTypes;
 		foreach (Figure figure in figuresOnBoard) {
             bool playerCanMoveIt = figure.FigureSide == GameManager.GM.CurrentPlayer;
@@ -39,7 +38,7 @@ public sealed class FigureManager : MonoBehaviour {
 		destination.Figure = SelectedFigure;
 		SelectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
         SelectedFigure.CanMove = false;
-		Messenger.Broadcast ("NextTurn");
+		Messenger.Broadcast ("FigureMoved");
 	}
 
 	private void DestroyFigure (Figure figure) {

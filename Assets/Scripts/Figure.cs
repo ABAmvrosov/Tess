@@ -20,8 +20,9 @@ public class Figure : MonoBehaviour {
 		private set;
     }
 
-    void OnEnable() {
-		Messenger.AddListener ("NextTurn", UpdatePosition);
+    void Awake() {
+        Messenger.AddListener("GameStarted", UpdatePosition);
+		Messenger.AddListener("NextTurn", UpdatePosition);
 	}
 
 	void OnMouseDown () {

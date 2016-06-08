@@ -48,7 +48,7 @@ public sealed class GameManager : MonoBehaviour {
 		if (WinText == null)
 			Debug.LogError ("Win text not specified.");
         GameState = new ChooseCardState();
-		CurrentPlayer = Side.Black;
+		CurrentPlayer = Side.White;
 		Messenger.AddListener ("NextTurn", EndTurn);
 		Messenger.AddListener ("KingDead", EndGame);
 	}

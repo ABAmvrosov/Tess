@@ -5,26 +5,27 @@ public class Tile : MonoBehaviour {
 	
 	public bool PossibleMove { 
 		get { return _possibleMove; } 
-		set { _possibleMove = value; } 
-	}
-	public TileType Type {
+		set { _possibleMove = value; }
+    }
+    private bool _possibleMove;
+
+    public TileType Type {
 		get { return _type; }
 		set { _type = value; }
-	}
-	public Figure Figure {
+    }
+    [SerializeField] private TileType _type;
+
+    public Figure Figure {
 		get { return _figure; }
 		set { _figure = value; }
-	}
-
-	private bool _possibleMove;
-	private TileType _type;
-	private Figure _figure;
-
-	private SpriteRenderer _spriteRenderer;
+    }
+    private Figure _figure;
+    
+    private SpriteRenderer _spriteRenderer;
     
 	void Awake () {
 		_spriteRenderer = GetComponent<SpriteRenderer> ();
-		Messenger.AddListener ("NextTurn", OnFigureMove);
+		Messenger.AddListener ("FigureMoved", OnFigureMove);
 	}
 
 	void OnMouseOver () {

@@ -1,26 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public sealed class PrototypeBoard : Board {
+﻿public sealed class PrototypeBoard : Board {
 
 	private int _dimensionOfBoard;
 	private TileFactory _tileFactory;
 	private Tile[,] _tileArray;
 
-	public PrototypeBoard(int dimension, TileFactory aTileFactory) {
+	public PrototypeBoard(int dimension, TileFactory tileFactory) {
 		_dimensionOfBoard = dimension;
-		_tileFactory = aTileFactory;
-		_tileArray = new Tile[_dimensionOfBoard, _dimensionOfBoard];
+		_tileFactory = tileFactory;
+		_tileArray = new Tile[dimension, dimension];
 
-		BuildBoard (_dimensionOfBoard);
+		BuildBoard (dimension);
 	} 
 
 	public override Tile GetTile(int horCoordinateX, int verCoordinateY) {
-		return (CheckCoordinate(horCoordinateX, verCoordinateY)) ? _tileArray [horCoordinateX, verCoordinateY] : null;
+		return IsValidCoordinates(horCoordinateX, verCoordinateY) ? _tileArray [horCoordinateX, verCoordinateY] : null;
 	}
 
-	protected override bool CheckCoordinate (int horCoordinateX, int verCoordinateY) {
-		return !((horCoordinateX < 0) | (horCoordinateX > _dimensionOfBoard - 1) | (verCoordinateY < 0) | (verCoordinateY > _dimensionOfBoard - 1));
+	protected override bool IsValidCoordinates (int horCoordinateX, int verCoordinateY) {
+        bool isXValid = (horCoordinateX >= 0) & (horCoordinateX <= _dimensionOfBoard - 1);
+        bool isYValid = (verCoordinateY >= 0) & (verCoordinateY <= _dimensionOfBoard - 1);
+        return isXValid & isYValid;
 	}
 
 	private void BuildBoard(int dimension) {
@@ -32,8 +31,7 @@ public sealed class PrototypeBoard : Board {
 
 	private void ProceedRow (int verCoordinateY, int dimension) {
 		for (int horCoordinateX = 0; horCoordinateX < dimension; horCoordinateX++) {
-			Tile tile = CreateTile (horCoordinateX, verCoordinateY);
-			_tileArray [horCoordinateX, verCoordinateY] = tile;
+			_tileArray [horCoordinateX, verCoordinateY] = CreateTile(horCoordinateX, verCoordinateY);
 		}
 	}
 

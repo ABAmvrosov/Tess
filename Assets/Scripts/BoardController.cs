@@ -14,8 +14,8 @@ public class BoardController : MonoBehaviour {
 		_board = new PrototypeBoard (_dimensionOfBoard, _tileFactory);
 		SetupBlackFigures ();
 		SetupWhiteFigures ();
-		Messenger.Broadcast ("NextTurn");
-	}
+        Messenger.Broadcast("GameStarted");
+    }
 
 	private void SetupBlackFigures () {
 		AddFigure (FigureType.Pawn, Side.Black, 4, 1);
@@ -42,7 +42,9 @@ public class BoardController : MonoBehaviour {
 	protected void AddFigure (FigureType figureType, Side figureSide, int horCoordinateX, int verCoordinateY) {
 		GameObject figureObject = _figureFactory.GetFigure (figureType, figureSide) as GameObject;
 		figureObject.transform.position = new Vector3 (horCoordinateX, verCoordinateY, -0.1f);
-		GameManager.TheFigureManager.RegisterFigure (figureObject.GetComponent<Figure> () , GetTile(horCoordinateX, verCoordinateY));
+        Figure figureComponent = figureObject.GetComponent<Figure>();
+        Tile owner = GetTile(horCoordinateX, verCoordinateY);
+        GameManager.TheFigureManager.RegisterFigure (figureComponent, owner);
 	}
 
 	public Tile GetTile (int horCoordinateX, int verCoordinateY) {
@@ -51,8 +53,8 @@ public class BoardController : MonoBehaviour {
     
     public void HighlightPossibleMoves (Figure figure) {
 		Tile startTile = GetTile(figure.horCoordinateX, figure.verCoordinateY);
-		bool bonusMoves = startTile.GetTileSide () == figure.FigureSide;
-		int[,] moves = figure.MovementModel.GetModel (bonusMoves);
+		bool isBonusMoves = (startTile.GetTileSide () == figure.FigureSide);
+		int[,] moves = figure.MovementModel.GetModel (isBonusMoves);
 		if (figure.MovementModel.IsFixed) {
 			ShowFixedMoves (figure, moves);
 		} else {
@@ -62,33 +64,35 @@ public class BoardController : MonoBehaviour {
 
 	private void ShowFixedMoves (Figure figure, int[,] moves) {
 		for (int i = 0; i < moves.GetLength (0); i++) {
-			HighlightTile (figure.horCoordinateX + moves [i, 0], figure.verCoordinateY + moves [i, 1]);
+            int x = figure.horCoordinateX + moves[i, 0];
+            int y = figure.verCoordinateY + moves[i, 1];
+            HighlightableTile (x, y);
 		}
 	}
 
 	private void ShowNonFixedMoves (Figure figure, int[,] moves) {
 		for (int i = 0; i < moves.GetLength (0); i++) {
-			int nextXCoordinate = figure.horCoordinateX + moves [i, 0];
-			int nextYCoordinate = figure.verCoordinateY + moves [i, 1];
-			while (HighlightTile (nextXCoordinate, nextYCoordinate)) {
-				nextXCoordinate += moves [i, 0];
-				nextYCoordinate += moves [i, 1];
+			int nextX = figure.horCoordinateX + moves [i, 0];
+			int nextY = figure.verCoordinateY + moves [i, 1];
+			while (HighlightableTile (nextX, nextY)) {
+				nextX += moves [i, 0];
+				nextY += moves [i, 1];
 			}
 		}
 	}
 
-	private bool HighlightTile (int horCoordinateX, int verCoordinateY) {
+	private bool HighlightableTile (int horCoordinateX, int verCoordinateY) {
 		Tile tile = GetTile(horCoordinateX, verCoordinateY);
-		if (tile != null && tile.Type != TileType.Wall) {			
-			Figure figureAtDest = tile.Figure;
-			return IsAttack (figureAtDest, tile);
+		if (tile != null && tile.Type != TileType.Wall) {
+			return IsTileEmpty (tile);
 		} else {
 			return false;
 		}
 	}
 
-	private bool IsAttack (Figure figureAtDest, Tile tile) {
-		if (figureAtDest != null && figureAtDest.IsEnemy ()) {
+	private bool IsTileEmpty (Tile tile) {
+        Figure figureAtDest = tile.Figure;
+        if (figureAtDest != null && figureAtDest.IsEnemy ()) {
 			tile.HighlightAttack ();
 			tile.PossibleMove = true;
 			return false;
@@ -98,5 +102,5 @@ public class BoardController : MonoBehaviour {
 			return true;
 		} else
 			return false;
-	}
+	}    
 }

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 using System.Collections.Generic;
 
 public class FigureFactory : MonoBehaviour {
@@ -44,22 +42,31 @@ public class FigureFactory : MonoBehaviour {
         figurePool.Push(figureObject);
     }
 
-    public GameObject GetFigure (FigureType figureType, Side figureSide) {
-		GameObject figureObject = null;
-		if (figurePool.Count != 0) {
-			figureObject = figurePool.Pop();
-		} else {
-			figureObject = Instantiate (FigurePrefab) as GameObject;
-			figureObject.transform.SetParent (FigureObjectsContainer.transform);
-		}
-		if (figureSide == Side.Black) 
-			ConfigureBlack (figureType, figureObject);
-		else
-			ConfigureWhite (figureType, figureObject);
-		return figureObject;
+    public GameObject GetWhiteFigure(FigureType figureType, IntVector2 coordinates) {
+        GameObject figureObject = GetFigureObject(coordinates);
+        ConfigureWhite(figureType, figureObject);
+        return figureObject;
+    }
+
+    public GameObject GetBlackFigure (FigureType figureType, IntVector2 coordinates) {
+        GameObject figureObject = GetFigureObject(coordinates);
+        ConfigureBlack (figureType, figureObject);
+        return figureObject;
 	}
-        
-	void ConfigureBlack (FigureType figureType, GameObject figureObject) {
+
+    private GameObject GetFigureObject(IntVector2 coordinates) {
+        GameObject figureObject = null;
+        if (figurePool.Count != 0) {
+            figureObject = figurePool.Pop();
+        } else {
+            figureObject = Instantiate(FigurePrefab) as GameObject;
+            figureObject.transform.SetParent(FigureObjectsContainer.transform);
+        }
+        figureObject.transform.position = new Vector3(coordinates.x, coordinates.y, -0.1f);
+        return figureObject;
+    }
+
+    private void ConfigureBlack (FigureType figureType, GameObject figureObject) {
 		Figure figureComponent = null;
 		switch (figureType) {
 		case FigureType.Pawn:
@@ -99,10 +106,10 @@ public class FigureFactory : MonoBehaviour {
             figureObject.name = "Black-Queen";
 			break;
 		}
-		figureComponent.FigureSide = Side.Black;
+		figureComponent.FigureSide = GameSide.Black;
 	}
 
-	void ConfigureWhite (FigureType figureType, GameObject figureObject) {
+    private void ConfigureWhite (FigureType figureType, GameObject figureObject) {
 		Figure figureComponent = null;
 		switch (figureType) {
 		case FigureType.Pawn:
@@ -142,6 +149,6 @@ public class FigureFactory : MonoBehaviour {
             figureObject.name = "White-Queen";
 			break;
 		}
-		figureComponent.FigureSide = Side.White;
+		figureComponent.FigureSide = GameSide.White;
 	}
 }

@@ -2,6 +2,10 @@
 using System.Collections;
 
 internal class SelectFigureState : State {
+
+    public SelectFigureState() {
+        notifierText = "Select figure!";
+    }
     protected override void ChangeState(StateContext context) {
         switch (context.stateMark) {
             case StateMark.Figure:

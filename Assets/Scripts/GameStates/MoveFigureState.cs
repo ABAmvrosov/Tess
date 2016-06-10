@@ -2,15 +2,20 @@
 using System.Collections;
 
 internal class MoveFigureState : State {
+
+    public MoveFigureState() {
+        notifierText = "Move choosed figure!";                
+    }
+
     protected override void ChangeState(StateContext context) {
         switch (context.stateMark) {
             case StateMark.Figure:
                 Figure figure = (Figure) context.contextObject;
-                Tile attackedTile = GameManager.TheBoardController.GetTile(figure.horCoordinateX, figure.verCoordinateY);
+                Tile attackedTile = GameManager.TheBoardController.GetTile(figure.Coordinates);
                 GameManager.TheFigureManager.Move(attackedTile);
                 DetermineNextState();
                 break;
-            case StateMark.MoveToTile:
+            case StateMark.Tile:
                 Tile destination = (Tile) context.contextObject;
                 if (destination.PossibleMove) {
                     GameManager.TheFigureManager.Move(destination);

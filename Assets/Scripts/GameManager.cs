@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public sealed class GameManager : MonoBehaviour {
 			
 	public static GameManager GM { get; private set; }
-	public static FigureManager TheFigureManager { get; private set; }
+	public static FigureManager TheFigureManager { get;  private set; }
 	public static CardManager TheCardManager { get; private set; }
 	public static BoardController TheBoardController { get; private set; }
 
@@ -28,9 +28,11 @@ public sealed class GameManager : MonoBehaviour {
 	}
 	[SerializeField] private GameObject _gameOverScreen;
 
-	public Side CurrentPlayer { get; private set; }
+	public GameSide CurrentPlayer { get; private set; }
 
     internal State GameState { get; set; }
+
+    [SerializeField] private Text notifierText;
 
     void Awake () {
 		if (GM == null)
@@ -48,9 +50,11 @@ public sealed class GameManager : MonoBehaviour {
 		if (WinText == null)
 			Debug.LogError ("Win text not specified.");
         GameState = new ChooseCardState();
-		CurrentPlayer = Side.White;
-		Messenger.AddListener ("NextTurn", EndTurn);
-		Messenger.AddListener ("KingDead", EndGame);
+        ChangeNotifierText();
+		CurrentPlayer = GameSide.White;
+        Messenger.AddListener("StateChanged", ChangeNotifierText);
+		Messenger.AddListener("NextTurn", EndTurn);
+		Messenger.AddListener("KingDead", EndGame);
 	}
         
 	public void PlayAgain() {
@@ -61,17 +65,21 @@ public sealed class GameManager : MonoBehaviour {
         GameState.HandleAction(context);
     }
 
-	void EndTurn () {
-		if (CurrentPlayer == Side.White) {
-			CurrentPlayer = Side.Black;
+    private void ChangeNotifierText() {
+        notifierText.text = GameState.notifierText;
+    }
+
+    private void EndTurn () {
+		if (CurrentPlayer == GameSide.White) {
+			CurrentPlayer = GameSide.Black;
 			PlayerTurnText.text = "Player 2 - Black";
 		} else {
-			CurrentPlayer = Side.White;
+			CurrentPlayer = GameSide.White;
 			PlayerTurnText.text = "Player 1 - White";
 		}
 	}
 
-	void EndGame () {
+    private void EndGame () {
 		Debug.Log ("EndGame");
 		WinText.text = PlayerTurnText.text + " WIN";
 		GameOverScreen.SetActive (true);

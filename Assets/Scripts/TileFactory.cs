@@ -16,16 +16,16 @@ public class TileFactory : MonoBehaviour {
         _blackSprite = Resources.Load<Sprite>("Sprites/Black");
     }
 
-    public Tile GetTile(TileType type, int horCoordinateX, int verCoordinateY) {
+    public Tile GetTile(GameSide tileSide, int horCoordinateX, int verCoordinateY) {
         Tile result = null;
-        switch (type) {
-            case TileType.White:
+        switch (tileSide) {
+            case GameSide.White:
                 result = Instantiate(_white);
                 break;
-            case TileType.Black:
+            case GameSide.Black:
                 result = Instantiate(_black);
                 break;
-            case TileType.Wall:
+            case GameSide.Neutral:
                 result = Instantiate(_wall);
                 break;
         }
@@ -39,16 +39,16 @@ public class TileFactory : MonoBehaviour {
         tile.transform.SetParent(_tileContainer.transform);
     }
 
-	public void SetTileType (Tile tile, TileType tileType) {
-		tile.Type = tileType;
-		switch (tileType) {
-		case TileType.Wall:
+	public void SetTileSide (Tile tile, GameSide tileSide) {
+		tile.TileSide = tileSide;
+		switch (tileSide) {
+		case GameSide.Neutral:
 			tile.GetComponent<SpriteRenderer>().sprite = _wallSprite;	
 			break;
-		case TileType.White:
+		case GameSide.White:
 			tile.GetComponent<SpriteRenderer>().sprite = _whiteSprite;
 			break;
-		case TileType.Black:
+		case GameSide.Black:
 			tile.GetComponent<SpriteRenderer>().sprite = _blackSprite;
 			break;
 		}		

@@ -33,11 +33,10 @@ public sealed class FigureManager : MonoBehaviour {
 	}
 
 	private void MoveFigure(Tile destination) {
-		Tile startTile = GameManager.TheBoardController.GetTile (SelectedFigure.horCoordinateX, SelectedFigure.verCoordinateY);
+		Tile startTile = GameManager.TheBoardController.GetTile (SelectedFigure.Coordinates);
 		startTile.Figure = null;
 		destination.Figure = SelectedFigure;
 		SelectedFigure.transform.position = new Vector3 (destination.transform.position.x, destination.transform.position.y, 0f);
-        SelectedFigure.CanMove = false;
 		Messenger.Broadcast ("FigureMoved");
 	}
 

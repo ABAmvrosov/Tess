@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Tile : MonoBehaviour {
 	
@@ -9,41 +8,48 @@ public class Tile : MonoBehaviour {
     }
     private bool _possibleMove;
 
-    public TileType Type {
-		get { return _type; }
-		set { _type = value; }
+    public GameSide TileSide {
+		get { return _tileSide; }
+		set { _tileSide = value; }
     }
-    [SerializeField] private TileType _type;
+    [SerializeField] private GameSide _tileSide;
 
-    public Figure Figure {
-		get { return _figure; }
-		set { _figure = value; }
-    }
-    private Figure _figure;
+    public Figure Figure { get; set; }
     
     private SpriteRenderer _spriteRenderer;
-    
-	void Awake () {
+    private bool _isMouseOver;
+
+    void Awake () {
 		_spriteRenderer = GetComponent<SpriteRenderer> ();
 		Messenger.AddListener ("FigureMoved", OnFigureMove);
+        Messenger.AddListener ("NextTurn", UnHighlight);
 	}
 
 	void OnMouseOver () {
-		if (!PossibleMove) {
+        if (GameManager.GM.GameState is PlaceGroundState && !_isMouseOver) {
+            _isMouseOver = true;
+            GameManager.TheBoardController.GroundModelHighlight(true, this);
+        } else if (!PossibleMove && !_isMouseOver) {
+            _isMouseOver = true;
 			Highlight ();
 		}
 	}
 
 	void OnMouseDown () {
-        StateContext context = new StateContext(this, StateMark.MoveToTile);
+        StateContext context = new StateContext(this, StateMark.Tile);
         GameManager.GM.HandleActionByState(context);			
 	}
 
 	void OnMouseExit () {
 		if (!PossibleMove) {
+            _isMouseOver = false;
 			UnHighlight ();
 		}
-	}
+        if (GameManager.GM.GameState is PlaceGroundState) {
+            _isMouseOver = false;
+            GameManager.TheBoardController.GroundModelHighlight(false, this);
+        }
+    }
     
 	public void Highlight () {
 		_spriteRenderer.color = Color.green;
@@ -55,17 +61,6 @@ public class Tile : MonoBehaviour {
 
 	public void UnHighlight () {
 		_spriteRenderer.color = Color.white;
-	}
-
-	public Side GetTileSide () {
-		switch (this.Type) {
-		case TileType.Black:
-			return Side.Black;
-		case TileType.White:
-			return Side.White;
-		default:
-			return Side.Undefined;
-		}
 	}
     
 	void OnFigureMove () {

@@ -1,14 +1,9 @@
-﻿/*Base script taken from Game Development for Modern Platforms MSU course*/
-
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour {
 	
-	// Submenus
 	public GameObject MainMenu;
 	//public GameObject optionsMenu;
 	//public GameObject aboutMenu;
@@ -19,7 +14,6 @@ public class MainMenuManager : MonoBehaviour {
 	void Awake()
 	{
 		mainTitle = TitleText.text;
-		// determine if Quit button should be shown
 		ShowMenu("mainMenu");
 	}
 

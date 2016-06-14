@@ -27,6 +27,7 @@ public class Figure : MonoBehaviour {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         SetCoordinates();
         Messenger.AddListener("NextTurn", UpdatePosition);
+        Messenger.AddListener("FigureMoved", SetCoordinates);
     }
 
     private void SetCoordinates() {

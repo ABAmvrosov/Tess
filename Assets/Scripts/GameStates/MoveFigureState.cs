@@ -11,8 +11,11 @@ internal class MoveFigureState : State {
         switch (context.stateMark) {
             case StateMark.Figure:
                 Figure figure = (Figure) context.contextObject;
-                Tile attackedTile = GameManager.TheBoardController.GetTile(figure.Coordinates);
-                GameManager.TheFigureManager.Move(attackedTile);
+                Tile destTile = GameManager.TheBoardController.GetTile(figure.Coordinates);
+                if (!figure.IsEnemy()) {
+                    break;
+                }
+                GameManager.TheFigureManager.Move(destTile);
                 DetermineNextState();
                 break;
             case StateMark.Tile:

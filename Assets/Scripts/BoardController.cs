@@ -15,9 +15,12 @@ public class BoardController : MonoBehaviour {
     }
 
     private void SetupPrototypeBoardFigures() {
-        FigureType[] figures = { FigureType.Pawn, FigureType.Pawn, FigureType.Knight, FigureType.King, FigureType.Queen, FigureType.Knight, FigureType.Bishop, FigureType.Rook };
-        int[,] whiteFiguresCoordinates = { { 4, 1 }, { 5, 1 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 }, { 8, 0 } };
-        int[,] blackFiguresCoordinates = { { 4, 8 }, { 5, 8 }, { 3, 9 }, { 4, 9 }, { 5, 9 }, { 6, 9 }, { 7, 9 }, { 8, 9 } };
+        FigureType[] figures = { FigureType.Pawn, FigureType.Pawn,   FigureType.Pawn,   FigureType.Pawn, FigureType.Pawn, FigureType.Pawn, FigureType.Pawn, FigureType.Pawn, FigureType.Pawn, FigureType.Pawn,
+                                 FigureType.Rook, FigureType.Knight, FigureType.Bishop,                  FigureType.King, FigureType.Queen,                 FigureType.Bishop, FigureType.Knight, FigureType.Rook };
+        int[,] whiteFiguresCoordinates = { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 }, { 4, 1 }, { 5, 1 }, { 6, 1 }, { 7, 1 }, { 8, 1 }, { 9, 1 },
+                                           { 0, 0 }, { 1, 0 }, { 2, 0 },           { 4, 0 }, { 5, 0 },           { 7, 0 }, { 8, 0 }, { 9, 0 } };
+        int[,] blackFiguresCoordinates = { { 0, 8 }, { 1, 8 }, { 2, 8 }, { 3, 8 }, { 4, 8 }, { 5, 8 }, { 6, 8 }, { 7, 8 }, { 8, 8 }, { 9, 8 },
+                                           { 0, 9 }, { 1, 9 }, { 2, 9 },           { 5, 9 }, { 4, 9 },           { 7, 9 }, { 8, 9 }, { 9, 9 } };
         SetupWhiteFigures(figures, whiteFiguresCoordinates);
         SetupBlackFigures(figures, blackFiguresCoordinates);
     }
@@ -137,11 +140,11 @@ public class BoardController : MonoBehaviour {
 		Tile startTile = GetTile(figure.Coordinates);
 		bool isBonusMoves = (startTile.TileSide == figure.FigureSide);
 		int[,] moves = figure.MovementModel.GetModel (isBonusMoves);
-		if (figure.MovementModel.IsFixed) {
-			ShowFixedMoves (figure, moves);
-		} else {
-			ShowNonFixedMoves (figure, moves);
-		}
+        if (figure.MovementModel.IsFixed) {
+            ShowFixedMoves(figure, moves);
+        } else {
+            ShowNonFixedMoves(figure, moves);
+        }
 	}
 
 	private void ShowFixedMoves (Figure figure, int[,] moves) {
@@ -149,8 +152,26 @@ public class BoardController : MonoBehaviour {
             int x = figure.Coordinates.x + moves[i, 0];
             int y = figure.Coordinates.y + moves[i, 1];
             HighlightableTile (new IntVector2(x, y));
-		}
-	}
+        }
+        if (figure.Type == FigureType.Pawn) {
+            HighlightPawnAttack(figure);
+        } 
+    }
+
+    private void HighlightPawnAttack(Figure pawn) {
+        int[,] attackMoves = { { -1, 1 }, { 1, 1 }, { -1, -1 }, { 1, -1 }, };
+        Tile targetTile = null;
+        for (int i = 0; i < attackMoves.GetLength(0); i++) {
+            int x = pawn.Coordinates.x + attackMoves[i, 0];
+            int y = pawn.Coordinates.y + attackMoves[i, 1];
+            targetTile = GetTile(new IntVector2(x, y));
+            Figure targetFigure = targetTile.Figure;
+            if (targetTile != null && targetFigure != null && targetFigure.IsEnemy()) {
+                targetTile.HighlightAttack();
+                targetTile.PossibleMove = true;
+            }
+        }
+    }
 
 	private void ShowNonFixedMoves (Figure figure, int[,] moves) {
 		for (int i = 0; i < moves.GetLength (0); i++) {

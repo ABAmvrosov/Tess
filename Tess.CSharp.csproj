@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -92,8 +90,8 @@
     <Compile Include="Assets\Scripts\GameStates\State.cs" />
     <Compile Include="Assets\Scripts\GameStates\StateContext.cs" />
     <Compile Include="Assets\Scripts\GroundCard.cs" />
-    <Compile Include="Assets\Scripts\GroundCardModels\GroundCardModel.cs" />
     <Compile Include="Assets\Scripts\GroundCardModels\CubeModel.cs" />
+    <Compile Include="Assets\Scripts\GroundCardModels\GroundCardModel.cs" />
     <Compile Include="Assets\Scripts\GroundCardModels\JModel.cs" />
     <Compile Include="Assets\Scripts\GroundCardModels\LModel.cs" />
     <Compile Include="Assets\Scripts\GroundCardModels\SModel.cs" />
@@ -102,10 +100,10 @@
     <Compile Include="Assets\Scripts\IntVector2.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\Messenger.cs" />
-    <Compile Include="Assets\Scripts\MoveModels\MoveModel.cs" />
     <Compile Include="Assets\Scripts\MoveModels\BishopMoveModel.cs" />
     <Compile Include="Assets\Scripts\MoveModels\KingMoveModel.cs" />
     <Compile Include="Assets\Scripts\MoveModels\KnightMoveModel.cs" />
+    <Compile Include="Assets\Scripts\MoveModels\MoveModel.cs" />
     <Compile Include="Assets\Scripts\MoveModels\PawnMoveModel.cs" />
     <Compile Include="Assets\Scripts\MoveModels\QueenMoveModel.cs" />
     <Compile Include="Assets\Scripts\MoveModels\RookMoveModel.cs" />
@@ -114,6 +112,5 @@
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\TileFactory.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
